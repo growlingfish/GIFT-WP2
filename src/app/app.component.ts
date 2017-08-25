@@ -1,23 +1,24 @@
 import { Component } from '@angular/core';
-import { Platform, ModalController } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { IntroPage } from '../pages/intro/intro';
-import { SplashPage } from '../pages/splash/splash';
+import { LoginPage } from '../pages/login/login';
+
+import { UserProvider } from '../providers/user/user';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = IntroPage;
+  rootPage:any;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, modalCtrl: ModalController) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, userProvider: UserProvider) {
     platform.ready().then(() => {
+      this.rootPage = userProvider.getSeenIntro() ? LoginPage : IntroPage;
       statusBar.styleDefault();
-
-      let splash = modalCtrl.create(SplashPage);
-      splash.present();
+      splashScreen.hide();
     });
   }
 }
