@@ -14,13 +14,13 @@ export class IntroPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider) {
   }
 
-  ionViewCanEnter(): boolean{
-    if(this.userProvider.getSeenIntro()){
-      console.log("Trying to get to intro page ... blocked");
-      return false;
-    } else {
-      return true;
-    }
+  ionViewWillEnter() {
+    this.userProvider.getSeenIntro().then(hasSeen => {
+      if(hasSeen){
+        console.log("Trying to get to intro page ... blocked");
+        this.skipIntro();
+      }
+    });
   }
 
   skipIntro () {

@@ -58,8 +58,8 @@ export class UserProvider {
     }
   }
 
-  public logout () {
-    this.storage.clear();
+  public logout (): Promise<null> {
+    return this.storage.ready().then(() => this.storage.clear());
   }
 
   public register (username: string, password: string, email: string, name: string) {

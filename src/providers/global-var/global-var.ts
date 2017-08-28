@@ -37,7 +37,7 @@ export class GlobalVarProvider {
   }
 
   getRegisterURL (username, password, email, name) {
-    return this.getApiBase() + "new/sender/" + encodeURI(email) + "/" + encodeURI(username) + "/" + encodeURI(name) + "/" + encodeURI(password);
+    return this.getApiBase() + "new/sender/" + encodeURI(username) + "/" + encodeURI(password) + "/" + encodeURI(email) + "/" + encodeURI(name);
   }
 
   getGiftsURL (userId) {
