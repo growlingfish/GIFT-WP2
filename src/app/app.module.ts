@@ -8,6 +8,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { IntroPage } from '../pages/intro/intro';
 import { LoginPage } from '../pages/login/login';
 import { LogoutPage } from '../pages/logout/logout';
+import { TsandcsPage } from '../pages/tsandcs/tsandcs';
 import { RegisterPage } from '../pages/register/register';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
@@ -25,6 +26,7 @@ import { GlobalVarProvider } from '../providers/global-var/global-var';
     IntroPage,
     LoginPage,
     LogoutPage,
+    TsandcsPage,
     RegisterPage,
     AboutPage,
     ContactPage,
@@ -43,6 +45,7 @@ import { GlobalVarProvider } from '../providers/global-var/global-var';
     IntroPage,
     LoginPage,
     LogoutPage,
+    TsandcsPage,
     RegisterPage,
     AboutPage,
     ContactPage,

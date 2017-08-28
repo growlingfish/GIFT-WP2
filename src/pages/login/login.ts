@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
-import { RegisterPage } from '../register/register';
+import { TsandcsPage } from '../tsandcs/tsandcs';
 import { LogoutPage } from '../logout/logout';
 
 import { UserProvider } from '../../providers/user/user';
@@ -66,6 +66,6 @@ export class LoginPage {
   }
 
   register () {
-    this.navCtrl.setRoot(RegisterPage);
+    this.navCtrl.push(TsandcsPage);
   }
 }

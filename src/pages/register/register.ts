@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 
 import { LogoutPage } from '../logout/logout';
+import { TabsPage } from '../tabs/tabs';
 
 import { UserProvider } from '../../providers/user/user';
 
@@ -37,7 +38,7 @@ export class RegisterPage {
     this.userProvider.register(this.username, this.password, this.email, this.name).subscribe(success => {
       console.log(success);
       if (success) {
-        
+        this.navCtrl.setRoot(TabsPage);
       } else {
         this.showError("User already registered");
       }
@@ -48,7 +49,7 @@ export class RegisterPage {
   }
 
   cancel () {
-
+    this.navCtrl.popToRoot();
   }
 
   showLoading() {
