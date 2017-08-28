@@ -7,6 +7,8 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { IntroPage } from '../pages/intro/intro';
 import { LoginPage } from '../pages/login/login';
+import { LogoutPage } from '../pages/logout/logout';
+import { RegisterPage } from '../pages/register/register';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -15,12 +17,15 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UserProvider } from '../providers/user/user';
+import { GlobalVarProvider } from '../providers/global-var/global-var';
 
 @NgModule({
   declarations: [
     MyApp,
     IntroPage,
     LoginPage,
+    LogoutPage,
+    RegisterPage,
     AboutPage,
     ContactPage,
     HomePage,
@@ -37,6 +42,8 @@ import { UserProvider } from '../providers/user/user';
     MyApp,
     IntroPage,
     LoginPage,
+    LogoutPage,
+    RegisterPage,
     AboutPage,
     ContactPage,
     HomePage,
@@ -46,7 +53,8 @@ import { UserProvider } from '../providers/user/user';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserProvider
+    UserProvider,
+    GlobalVarProvider
   ]
 })
 export class AppModule {}
