@@ -10,9 +10,11 @@ import { LoginPage } from '../pages/login/login';
 import { LogoutPage } from '../pages/logout/logout';
 import { TsandcsPage } from '../pages/tsandcs/tsandcs';
 import { RegisterPage } from '../pages/register/register';
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
+import { RolePage } from '../pages/role/role';
+import { NewGiftPage } from '../pages/newgift/newgift';
+import { MyGiftsPage } from '../pages/mygifts/mygifts';
+import { TheirGiftsPage } from '../pages/theirgifts/theirgifts';
+import { ActivityPage } from '../pages/activity/activity';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -29,9 +31,11 @@ import { FCM } from '@ionic-native/fcm';
     LogoutPage,
     TsandcsPage,
     RegisterPage,
-    AboutPage,
-    ContactPage,
-    HomePage,
+    RolePage,
+    NewGiftPage,
+    MyGiftsPage,
+    TheirGiftsPage,
+    ActivityPage,
     TabsPage
   ],
   imports: [
@@ -48,9 +52,11 @@ import { FCM } from '@ionic-native/fcm';
     LogoutPage,
     TsandcsPage,
     RegisterPage,
-    AboutPage,
-    ContactPage,
-    HomePage,
+    RolePage,
+    NewGiftPage,
+    MyGiftsPage,
+    TheirGiftsPage,
+    ActivityPage,
     TabsPage
   ],
   providers: [

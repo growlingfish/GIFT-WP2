@@ -1,26 +1,37 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
-import { HomePage } from '../home/home';
+import { TheirGiftsPage } from '../theirgifts/theirgifts';
+import { MyGiftsPage } from '../mygifts/mygifts';
+import { ActivityPage } from '../activity/activity';
+import { LoginPage } from '../login/login';
+import { RolePage } from '../role/role';
 
-import { FCM } from '@ionic-native/fcm';
+import { UserProvider } from '../../providers/user/user';
 
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
-  tab1Root = HomePage;
-  tab2Root = AboutPage;
-  tab3Root = ContactPage;
+  makeRoot = TheirGiftsPage;
+  unwrapRoot = MyGiftsPage;
+  activityRoot = ActivityPage;
 
-  constructor(private platform: Platform, private fcm: FCM) {
-    platform.ready().then(() => {
-      if (this.platform.is('cordova')) {
-        fcm.getToken().then(token => {
-          console.log(token);
+  constructor(public navCtrl: NavController, private userProvider: UserProvider) {
+
+  }
+
+  ionViewWillEnter () {
+    var user = this.userProvider.getUser();
+    user.then(data => {
+      if (data == null) {
+        this.navCtrl.setRoot(LoginPage);
+      } else {
+        this.userProvider.getSeenRoles().then(hasSeen => {
+          if (!hasSeen) {
+            this.navCtrl.setRoot(RolePage);
+          }
         });
       }
     });

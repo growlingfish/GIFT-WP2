@@ -22,8 +22,7 @@ export class LoginPage {
   }
 
   ionViewWillEnter () {
-    var user = this.userProvider.getUser();
-    user.then(data => {
+    this.userProvider.getUser().then(data => {
       if (data == null) {
         // not already logged in, fine
       } else {

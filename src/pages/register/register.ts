@@ -36,7 +36,6 @@ export class RegisterPage {
     this.showLoading();
     this.userProvider.logout();
     this.userProvider.register(this.username, this.password, this.email, this.name).subscribe(success => {
-      console.log(success);
       if (success) {
         this.navCtrl.setRoot(TabsPage);
       } else {

@@ -20,8 +20,6 @@ export class LogoutPage {
     user.then(data => {
       if (data == null) {
         this.cancel();
-      } else {
-        // Logged in, fine
       }
     });
   }
