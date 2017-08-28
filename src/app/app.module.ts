@@ -19,6 +19,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UserProvider } from '../providers/user/user';
 import { GlobalVarProvider } from '../providers/global-var/global-var';
+import { FCM } from '@ionic-native/fcm';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { GlobalVarProvider } from '../providers/global-var/global-var';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserProvider,
-    GlobalVarProvider
+    GlobalVarProvider,
+    FCM
   ]
 })
 export class AppModule {}

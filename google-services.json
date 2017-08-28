@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "288481360666",
+    "firebase_url": "https://gift-eu-1491403324909.firebaseio.com",
+    "project_id": "gift-eu-1491403324909",
+    "storage_bucket": "gift-eu-1491403324909.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288481360666:android:72d9b22e83390cfb",
+        "android_client_info": {
+          "package_name": "uk.ac.nottingham.gift.wp2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "288481360666-30ck0upt2a4cj2vmt603jhq305lf10eg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIOeRwVydXJEPBetdfF5kWRGz7OhPhTsk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
