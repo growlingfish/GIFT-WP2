@@ -44,6 +44,22 @@ export class UserProvider {
     return this.storage.ready().then(() => this.storage.set('user', val));
   }
 
+  public getMyGifts (): Promise<any> {
+    return this.storage.ready().then(() => this.storage.get('myGifts'));
+  }
+
+  public setMyGifts (val: any): Promise<any> {
+    return this.storage.ready().then(() => this.storage.set('myGifts', val));
+  }
+
+  public getTheirGifts (): Promise<any> {
+    return this.storage.ready().then(() => this.storage.get('theirGifts'));
+  }
+
+  public setTheirGifts (val: any): Promise<any> {
+    return this.storage.ready().then(() => this.storage.set('theirGifts', val));
+  }
+
   public login (username: string, password: string) {
     if (username === null || password === null) {
       return Observable.throw("Username or password missing");
@@ -54,6 +70,28 @@ export class UserProvider {
           .subscribe(data => {
             if (typeof data.success !== 'undefined' && data.success) {
               this.setUser(data.user).then(data => {
+                this.updateTheirGifts().subscribe(complete => {
+                  if (complete) {
+                    console.log("Succeeded getting sent gifts");
+                  } else {
+                    console.log("Failed getting sent gifts");
+                  }
+                },
+                error => {
+                  console.log("Failed getting sent gifts");
+                });
+
+                this.updateMyGifts().subscribe(complete => {
+                  if (complete) {
+                    console.log("Succeeded getting received gifts");
+                  } else {
+                    console.log("Failed getting received gifts");
+                  }
+                },
+                error => {
+                  console.log("Failed getting received gifts");
+                });
+
                 //https://github.com/fechanique/cordova-plugin-fcm
                 //https://console.firebase.google.com/project/gift-eu-1491403324909/notification
                 this.platform.ready().then(() => {
@@ -108,6 +146,54 @@ export class UserProvider {
           });
       });
     }
+  }
+
+  updateTheirGifts () {
+    return Observable.create(observer => {
+      var user = this.getUser();
+      user.then(data => {
+        this.http.get(this.globalVar.getSentGiftsURL(data.ID))
+          .map(response => response.json())
+          .subscribe(data => {
+            if (typeof data.success !== 'undefined' && data.success) {
+              this.setTheirGifts(data.gifts);
+              observer.next(true);
+              observer.complete();
+            } else {
+              observer.next(false);
+              observer.complete();
+            }
+          },
+          function (error) {
+            observer.next(false);
+            observer.complete();
+          });
+      });
+    });
+  }
+
+  updateMyGifts () {
+    return Observable.create(observer => {
+      var user = this.getUser();
+      user.then(data => {
+        this.http.get(this.globalVar.getReceivedGiftsURL(data.ID))
+          .map(response => response.json())
+          .subscribe(data => {
+            if (typeof data.success !== 'undefined' && data.success) {
+              this.setMyGifts(data.gifts);
+              observer.next(true);
+              observer.complete();
+            } else {
+              observer.next(false);
+              observer.complete();
+            }
+          },
+          function (error) {
+            observer.next(false);
+            observer.complete();
+          });
+      });
+    });
   }
 
 }

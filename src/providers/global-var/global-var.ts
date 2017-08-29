@@ -40,8 +40,12 @@ export class GlobalVarProvider {
     return this.getApiBase() + "new/sender/" + encodeURI(username) + "/" + encodeURI(password) + "/" + encodeURI(email) + "/" + encodeURI(name);
   }
 
-  getGiftsURL (userId) {
-    return this.getApiBase() + "gifts/" + userId;
+  getReceivedGiftsURL (userId) {
+    return this.getApiBase() + "gifts/received/" + userId;
+  }
+
+  getSentGiftsURL (userId) {
+    return this.getApiBase() + "gifts/sent/" + userId;
   }
 
   getReceivedURL (giftId) {
