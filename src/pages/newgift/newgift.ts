@@ -182,7 +182,7 @@ export class NewGiftPage {
     if (!!this.gift.recipient && !!this.gift.recipient.ID) {
       return "checkmark-circle";
     } else {
-      return "circle-add";
+      return "add-circle";
     }
   }
 
