@@ -16,6 +16,7 @@ import { MyGiftsPage } from '../pages/mygifts/mygifts';
 import { TheirGiftsPage } from '../pages/theirgifts/theirgifts';
 import { ActivityPage } from '../pages/activity/activity';
 import { TabsPage } from '../pages/tabs/tabs';
+import { ContactsPage } from '../pages/contacts/contacts';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,7 +37,8 @@ import { FCM } from '@ionic-native/fcm';
     MyGiftsPage,
     TheirGiftsPage,
     ActivityPage,
-    TabsPage
+    TabsPage,
+    ContactsPage
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,8 @@ import { FCM } from '@ionic-native/fcm';
     MyGiftsPage,
     TheirGiftsPage,
     ActivityPage,
-    TabsPage
+    TabsPage,
+    ContactsPage
   ],
   providers: [
     StatusBar,

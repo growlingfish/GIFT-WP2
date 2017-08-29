@@ -60,6 +60,14 @@ export class UserProvider {
     return this.storage.ready().then(() => this.storage.set('theirGifts', val));
   }
 
+  public getContacts (): Promise<any> {
+    return this.storage.ready().then(() => this.storage.get('contacts'));
+  }
+
+  public setContacts (val: any): Promise<any> {
+    return this.storage.ready().then(() => this.storage.set('contacts', val));
+  }
+
   public login (username: string, password: string) {
     if (username === null || password === null) {
       return Observable.throw("Username or password missing");
@@ -90,6 +98,17 @@ export class UserProvider {
                 },
                 error => {
                   console.log("Failed getting received gifts");
+                });
+
+                this.updateContacts().subscribe(complete => {
+                  if (complete) {
+                    console.log("Succeeded getting contacts");
+                  } else {
+                    console.log("Failed getting contacts");
+                  }
+                },
+                error => {
+                  console.log("Failed getting contacts");
                 });
 
                 //https://github.com/fechanique/cordova-plugin-fcm
@@ -181,6 +200,30 @@ export class UserProvider {
           .subscribe(data => {
             if (typeof data.success !== 'undefined' && data.success) {
               this.setMyGifts(data.gifts);
+              observer.next(true);
+              observer.complete();
+            } else {
+              observer.next(false);
+              observer.complete();
+            }
+          },
+          function (error) {
+            observer.next(false);
+            observer.complete();
+          });
+      });
+    });
+  }
+
+  updateContacts () {
+    return Observable.create(observer => {
+      var user = this.getUser();
+      user.then(data => {
+        this.http.get(this.globalVar.getContactsURL(data.ID))
+          .map(response => response.json())
+          .subscribe(data => {
+            if (typeof data.success !== 'undefined' && data.success) {
+              this.setContacts(data.contacts);
               observer.next(true);
               observer.complete();
             } else {

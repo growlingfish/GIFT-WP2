@@ -48,6 +48,10 @@ export class GlobalVarProvider {
     return this.getApiBase() + "gifts/sent/" + userId;
   }
 
+  getContactsURL (userId) {
+    return this.getApiBase() + "contacts/" + userId;
+  }
+/*
   getReceivedURL (giftId) {
     return this.getApiBase() + "received/gift/" + giftId;
   }
@@ -58,7 +62,7 @@ export class GlobalVarProvider {
 
   getRespondedURL (giftId) {
     return this.getApiBase() + "responded/gift/" + giftId;
-  }
+  }*/
 
   getDistance (lat1, lon1, lat2, lon2) {
     var p = 0.017453292519943295;

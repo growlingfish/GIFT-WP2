@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, App } from 'ionic-angular';
 
 import { IntroPage } from '../intro/intro';
 import { TabsPage } from '../tabs/tabs';
@@ -12,7 +12,7 @@ import { UserProvider } from '../../providers/user/user';
 })
 export class LogoutPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, private app: App) {
   }
 
   ionViewWillEnter () {
@@ -26,7 +26,7 @@ export class LogoutPage {
 
   logout () {
     this.userProvider.logout().then(data => {
-      this.navCtrl.setRoot(IntroPage);
+      this.app.getRootNav().setRoot(IntroPage);
     });
   }
 

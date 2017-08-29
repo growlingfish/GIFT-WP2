@@ -1,18 +1,75 @@
-<!--
-  Generated template for the NewgiftPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>newgift</ion-title>
+    <ion-title>{{gift.post_title}} <ion-icon name="arrow-dropdown-circle" (click)="editTitle()"></ion-icon></ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
+
+  <ion-grid class="recipient">
+    <ion-row>
+      <ion-col col-4 class="recipient-icon" (click)="editRecipient()">
+        <ion-icon name="add-circle"></ion-icon>
+      </ion-col>
+      <ion-col col-8>
+        <h2>Add recipient</h2>
+        <p>Who will you give this to?</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  <ion-grid class="build">
+    <ion-row>
+      <ion-col>
+        <h2>Build the experience</h2>
+        <p>What will the experience contain?</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="parts">
+    <ion-row *ngFor="let part of [0,1,2]">
+      <ion-col class="part-1">
+        <h2>Part {{part + 1}}</h2>
+        <p>Incomplete</p>
+      </ion-col>
+      <ion-col class="part-2">
+        <h2><ion-icon name="image"></ion-icon></h2>
+        <p>Add an object</p>
+      </ion-col>
+      <ion-col class="part-3">
+        <h2><ion-icon name="quote"></ion-icon></h2>
+        <p>Add a message</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="giftcard">
+    <ion-row>
+      <ion-col col-4 class="giftcard-icon">
+        <ion-icon name="add-circle"></ion-icon>
+      </ion-col>
+      <ion-col col-8>
+        <h2>Add a card</h2>
+        <p>How would you introduce the experience?</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="send">
+    <ion-row>
+      <ion-col>
+        <button ion-button block (click)="send()">Send gift</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { LogoutPage } from '../logout/logout';
+import { NewGiftPage } from '../newgift/newgift';
 
 import { UserProvider } from '../../providers/user/user';
 
@@ -35,7 +36,7 @@ export class TheirGiftsPage {
   }
 
   startNew () {
-    
+    this.navCtrl.push(NewGiftPage);
   }
 
   logout () {
