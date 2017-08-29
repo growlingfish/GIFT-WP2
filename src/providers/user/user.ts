@@ -60,6 +60,18 @@ export class UserProvider {
     return this.storage.ready().then(() => this.storage.set('theirGifts', val));
   }
 
+  public getUnfinishedGift (): Promise<any> {
+    return this.storage.ready().then(() => this.storage.get('unfinishedGift'));
+  }
+
+  public setUnfinishedGift (val: any): Promise<any> {
+    return this.storage.ready().then(() => this.storage.set('unfinishedGift', val));
+  }
+
+  public clearUnfinishedGift (): Promise<any> {
+    return this.storage.ready().then(() => this.storage.remove('unfinishedGift'));
+  }
+
   public getContacts (): Promise<any> {
     return this.storage.ready().then(() => this.storage.get('contacts'));
   }
@@ -141,7 +153,7 @@ export class UserProvider {
     return this.storage.ready().then(() => this.storage.clear());
   }
 
-  public register (username: string, password: string, email: string, name: string) {
+  public register (username: string, password: string, email: string, name: string): Observable<any> {
     if (email === null || password === null || name === null || username === null) {
       return Observable.throw("Please insert credentials");
     } else {
@@ -167,7 +179,7 @@ export class UserProvider {
     }
   }
 
-  updateTheirGifts () {
+  updateTheirGifts (): Observable<any> {
     return Observable.create(observer => {
       var user = this.getUser();
       user.then(data => {
@@ -191,7 +203,7 @@ export class UserProvider {
     });
   }
 
-  updateMyGifts () {
+  updateMyGifts (): Observable<any> {
     return Observable.create(observer => {
       var user = this.getUser();
       user.then(data => {
@@ -215,7 +227,7 @@ export class UserProvider {
     });
   }
 
-  updateContacts () {
+  updateContacts (): Observable<any> {
     return Observable.create(observer => {
       var user = this.getUser();
       user.then(data => {
@@ -225,6 +237,28 @@ export class UserProvider {
             if (typeof data.success !== 'undefined' && data.success) {
               this.setContacts(data.contacts);
               observer.next(true);
+              observer.complete();
+            } else {
+              observer.next(false);
+              observer.complete();
+            }
+          },
+          function (error) {
+            observer.next(false);
+            observer.complete();
+          });
+      });
+    });
+  }
+
+  invite (email: string, name: string): Observable<any> {
+    return Observable.create(observer => {
+      this.getUser().then(data => {
+        this.http.get(this.globalVar.getInviteURL(data.ID, email, name))
+          .map(response => response.json())
+          .subscribe(data => {
+            if (typeof data.success !== 'undefined' && data.success) {
+              observer.next(data.user);
               observer.complete();
             } else {
               observer.next(false);

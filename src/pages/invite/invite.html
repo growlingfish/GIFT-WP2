@@ -1,0 +1,40 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Invite new recipient</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <form (ngSubmit)="invite()" #inviteForm="ngForm">
+        <ion-row>
+          <ion-col>
+            <ion-list inset>
+    
+              <ion-item>
+                <ion-input type="text" placeholder="Their name" name="name" [(ngModel)]="name" required></ion-input>
+              </ion-item>
+    
+              <ion-item>
+                <ion-input type="text" placeholder="Their email" name="email" [(ngModel)]="email" required></ion-input>
+              </ion-item>
+    
+            </ion-list>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row>
+          <ion-col class="invite-col">
+            <button ion-button class="submit-btn" block type="submit" [disabled]="!inviteForm.form.valid">Send invite</button>
+          </ion-col>
+        </ion-row>
+    
+      </form>
+    
+      <ion-row>
+        <ion-col class="cancel-col">
+          <button ion-button color="danger" (click)="cancel()">Cancel</button>
+        </ion-col>
+      </ion-row>
+</ion-content>

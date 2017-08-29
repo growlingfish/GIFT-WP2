@@ -8,6 +8,14 @@
 
 <ion-content padding>
 
+  <ion-grid>
+
+    <ion-row>
+      <ion-col>
+        <p>Are you sure you want to log out?</p>
+      </ion-col>
+    </ion-row>
+
     <ion-row>
       <ion-col class="logout-col">
         <button ion-button block (click)="logout()">Log out</button>
@@ -19,5 +27,7 @@
         <button ion-button (click)="cancel()">Cancel</button>
       </ion-col>
     </ion-row>
+
+  </ion-grid>
 
 </ion-content>

@@ -20,15 +20,16 @@
 
     <ion-item (click)="startNew()">
       <ion-icon name="add-circle" item-start color="secondary"></ion-icon>
-      <h2>Make a new gift</h2>
-      <p>Start from scratch</p>
+      Make a new gift
       <button ion-button clear item-end>Start</button>
     </ion-item>
 
-    <ion-item *ngFor="let gift of gifts">
+    <ion-item-divider color="light">Already sent</ion-item-divider>
+
+    <ion-item *ngFor="let gift of gifts" (click)="review(gift)">
       <ion-icon name="arrow-dropright-circle" item-start></ion-icon>
       <h2>{{ gift.post_title }}</h2>
-      <p>Sent to {{ gift.recipient.nickname }} on {{ gift.post_date }}</p>
+      <p>Sent to {{ gift.recipient.nickname }} at {{ gift.post_date }}</p>
       <button ion-button clear item-end>Review</button>
     </ion-item>
   </ion-list>

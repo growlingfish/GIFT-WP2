@@ -13,66 +13,81 @@ import { UserProvider } from '../../providers/user/user';
 export class NewGiftPage {
 
   private gift: any;
-  private started: boolean;
+  private edited: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, private alertCtrl: AlertController) {
-    this.gift = {
-      "post_author": "1",
-      "post_title": "A new gift",
-      "post_status": "draft",
-      "recipient": {
-        //"ID": 2
-      },
-      "wraps": [
-        {
-          "post_status": "draft",
-          "menu_order": 0,
-          "unwrap_object": {
-            //"ID": 484,
-          }
-        },
-        {
-          "post_status": "draft",
-          "menu_order": 1,
-          "unwrap_object": {
-           //"ID": 484,
-          }
-        },
-        {
-          "post_status": "draft",
-          "menu_order": 2,
-          "unwrap_object": {
-            //"ID": 484,
-          }
-        }
-      ],
-      "payloads": [
-        {
-          "post_content": "",
-          "post_status": "draft",
-          "menu_order": 0
-        },
-        {
-          "post_content": "",
-          "post_status": "draft",
-          "menu_order": 1
-        },
-        {
-          "post_content": "",
-          "post_status": "draft",
-          "menu_order": 2
-        }
-      ],
-      "giftcards": [
-        {
-          "post_title": "",
-          "post_content": "",
-          "post_status": "draft"
-        }
-      ]
-    };
+    this.edited = false;
 
-    this.started = false;
+    this.gift = {
+      "post_title": "A new gift"
+    };
+  }
+
+  ionViewDidEnter () {
+    this.userProvider.getUnfinishedGift().then(existingGift => {
+      if (existingGift == null) {
+        this.userProvider.getUser().then(data => {
+          this.gift = {
+            "post_author": data.ID,
+            "post_title": "Tap to name this gift",
+            "post_status": "draft",
+            "recipient": {
+              //"ID": 2
+            },
+            "wraps": [
+              {
+                "post_status": "draft",
+                "menu_order": 0,
+                "unwrap_object": {
+                  //"ID": 484,
+                }
+              },
+              {
+                "post_status": "draft",
+                "menu_order": 1,
+                "unwrap_object": {
+                 //"ID": 484,
+                }
+              },
+              {
+                "post_status": "draft",
+                "menu_order": 2,
+                "unwrap_object": {
+                  //"ID": 484,
+                }
+              }
+            ],
+            "payloads": [
+              {
+                "post_content": "",
+                "post_status": "draft",
+                "menu_order": 0
+              },
+              {
+                "post_content": "",
+                "post_status": "draft",
+                "menu_order": 1
+              },
+              {
+                "post_content": "",
+                "post_status": "draft",
+                "menu_order": 2
+              }
+            ],
+            "giftcards": [
+              {
+                "post_title": "",
+                "post_content": "",
+                "post_status": "draft"
+              }
+            ]
+          };
+          this.userProvider.setUnfinishedGift(this.gift);
+        });
+      } else {
+        this.gift = existingGift;
+      }
+    });
   }
 
   editTitle () {
@@ -90,7 +105,7 @@ export class NewGiftPage {
           text: 'Save',
           handler: data => {
             this.gift.post_title = data.title;
-            this.started = true;
+            this.userProvider.setUnfinishedGift(this.gift);
           }
         },
         {
@@ -122,29 +137,34 @@ export class NewGiftPage {
     return false;
   }
 
-  hasStarted (): boolean {
-    return this.started;
+  hasEdited (): boolean {
+    return this.edited;
   }
 
   ionViewCanLeave(): boolean {
-    if (!this.hasStarted()) {
+    if (!this.hasEdited()) {
       return true;
     } else {
        let alert = this.alertCtrl.create({
-        title: "Save progress?",
-        subTitle: "Do you want to save your progress?",
+        title: "You haven't sent this gift",
+        subTitle: "Do you want to save your progress for later, or discard this gift?",
         buttons: [
           {
-            text: 'Yes',
+            text: 'Save',
             handler: () => {
-              console.log('To do');
+              this.userProvider.setUnfinishedGift(this.gift).then(data => {
+                this.edited = false;
+                this.navCtrl.pop();
+              });
             }
           },
           {
-            text: 'No',
+            text: 'Discard',
             handler: () => {
-              this.started = false;
-              this.navCtrl.pop();
+              this.userProvider.clearUnfinishedGift().then(data => {
+                this.edited = false;
+                this.navCtrl.pop();
+              });
             }
           }
         ]
@@ -156,6 +176,38 @@ export class NewGiftPage {
 
   logout () {
     this.navCtrl.push(LogoutPage);
+  }
+
+  recipientIcon (): string {
+    if (!!this.gift.recipient && !!this.gift.recipient.ID) {
+      return "checkmark-circle";
+    } else {
+      return "circle-add";
+    }
+  }
+
+  recipientIconColour (): string {
+    if (!!this.gift.recipient && !!this.gift.recipient.ID) {
+      return "secondary";
+    } else {
+      return "danger";
+    }
+  }
+
+  recipientTitle (): string {
+    if (!!this.gift.recipient && !!this.gift.recipient.nickname) {
+      return this.gift.recipient.nickname;
+    } else {
+      return "Tap to add a recipient";
+    }
+  }
+
+  recipientSubtitle (): string {
+    if (!!this.gift.recipient && !!this.gift.recipient.ID) {
+      return "Tap to choose a different recipient";
+    } else {
+      return "Who will you give this to?";
+    }
   }
 
 }

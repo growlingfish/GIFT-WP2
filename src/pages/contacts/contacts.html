@@ -18,16 +18,21 @@
 
   <ion-list inset>
     <ion-item (click)="inviteNew()">
-      <ion-icon name="add-circle" item-start color="secondary"></ion-icon>
+      <ion-avatar item-start>
+        <img src="http://via.placeholder.com/32x32">
+      </ion-avatar>
       A new recipient
-      <button ion-button clear item-end>Invite</button>
+      <button ion-button clear item-end>Create</button>
     </ion-item>
 
-    <ion-item *ngFor="let contact of contacts">
+    <ion-item-divider color="light">Registered recipients</ion-item-divider>
+
+    <ion-item *ngFor="let contact of contacts" (click)="invite(contact)">
       <ion-avatar item-start>
         <img [src]="contact.gravatar">
       </ion-avatar>
       {{contact.nickname}}
+      <button ion-button clear item-end>Invite</button>
     </ion-item>
   </ion-list>
 

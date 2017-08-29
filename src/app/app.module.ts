@@ -12,6 +12,7 @@ import { TsandcsPage } from '../pages/tsandcs/tsandcs';
 import { RegisterPage } from '../pages/register/register';
 import { RolePage } from '../pages/role/role';
 import { NewGiftPage } from '../pages/newgift/newgift';
+import { ReviewGiftPage } from '../pages/reviewgift/reviewgift';
 import { MyGiftsPage } from '../pages/mygifts/mygifts';
 import { TheirGiftsPage } from '../pages/theirgifts/theirgifts';
 import { ActivityPage } from '../pages/activity/activity';
@@ -34,6 +35,7 @@ import { FCM } from '@ionic-native/fcm';
     RegisterPage,
     RolePage,
     NewGiftPage,
+    ReviewGiftPage,
     MyGiftsPage,
     TheirGiftsPage,
     ActivityPage,
@@ -56,6 +58,7 @@ import { FCM } from '@ionic-native/fcm';
     RegisterPage,
     RolePage,
     NewGiftPage,
+    ReviewGiftPage,
     MyGiftsPage,
     TheirGiftsPage,
     ActivityPage,

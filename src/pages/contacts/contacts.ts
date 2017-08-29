@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 
 import { LogoutPage } from '../logout/logout';
+import { InvitePage } from '../invite/invite';
 
 import { UserProvider } from '../../providers/user/user';
 
@@ -13,7 +14,10 @@ export class ContactsPage {
 
   private contacts: Array<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, public modalCtrl: ModalController) {
+    this.userProvider.getContacts().then(data => {
+      this.contacts = data;
+    });
   }
 
   filterContacts (ev: any) {
@@ -24,9 +28,23 @@ export class ContactsPage {
       
       if (val && val.trim() != '') {
         this.contacts = this.contacts.filter((contact) => {
-          return (contact.nickname.toLowerCase().indexOf(val.toLowerCase()) > -1);
+          return (contact.nickname.toLowerCase().indexOf(val.toLowerCase()) > -1)
+            || (contact.user_email.toLowerCase().indexOf(val.toLowerCase()) > -1);
         })
       }
+    });
+  }
+
+  inviteNew () {
+    this.modalCtrl.create(InvitePage).present();
+  }
+
+  invite (contact: any) {
+    this.userProvider.getUnfinishedGift().then(gift => {
+      gift.recipient = contact;
+      this.userProvider.setUnfinishedGift(gift).then(data => {
+        this.navCtrl.pop();
+      });
     });
   }
 
