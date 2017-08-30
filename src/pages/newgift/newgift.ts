@@ -251,7 +251,7 @@ export class NewGiftPage {
 
   recipientTitle (): string {
     if (!!this.gift.recipient && !!this.gift.recipient.nickname) {
-      return this.gift.recipient.nickname;
+      return "To " + this.gift.recipient.nickname;
     } else {
       return "Tap to add a recipient";
     }
@@ -334,11 +334,16 @@ export class NewGiftPage {
   }
 
   editObject (part) {
-    this.navCtrl.push(ObjectsPage);
+    this.navCtrl.push(ObjectsPage, {
+      part: part,
+      selected: !!this.gift.wraps[part].unwrap_object.ID ? this.gift.wraps[part].unwrap_object.ID : null
+    });
   }
 
   editMessage (part) {
-    this.navCtrl.push(NewMessagePage);
+    this.navCtrl.push(NewMessagePage, {
+      part: part
+    });
   }
 
 }

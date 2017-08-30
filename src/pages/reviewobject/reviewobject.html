@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Use this object?</ion-title>
+    <ion-title>{{object.post_title}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -22,13 +22,7 @@
 
     <ion-row>
       <ion-col class="use-col">
-        <button ion-button block (click)="use()">Use this object</button>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col class="cancel-col">
-        <button ion-button color="danger" (click)="cancel()">Cancel</button>
+        <button ion-button block (click)="dismiss()">Back</button>
       </ion-col>
     </ion-row>
 

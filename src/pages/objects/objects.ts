@@ -13,8 +13,17 @@ import { UserProvider } from '../../providers/user/user';
 export class ObjectsPage {
 
   private objects: Array<any>;
+  private part: number;
+  private selected: number = -1;
+  private buttonAction: string = "Use";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, public modalCtrl: ModalController) {
+    this.part = navParams.get('part');
+    let selected = navParams.get('selected');
+    if (selected !== null) {
+      this.selected = selected;
+      this.buttonAction = "Replace";
+    }
     this.userProvider.getObjects().then(data => {
       this.objects = data;
     });
@@ -43,13 +52,29 @@ export class ObjectsPage {
   }
 
   addExisting (object) {
-
+    this.userProvider.getUnfinishedGift().then(gift => {
+      gift.wraps[this.part].unwrap_object = object;
+      this.userProvider.setUnfinishedGift(gift).then(data => {
+        this.navCtrl.pop();
+      });
+    });
   }
 
   viewExisting (object) {
-    this.modalCtrl.create(ViewObjectPage, {
+    let modal = this.modalCtrl.create(ViewObjectPage, {
       object: object
-    }).present();
+    });
+    modal.onDidDismiss(used => {
+      if (used) {
+        this.userProvider.getUnfinishedGift().then(gift => {
+          gift.wraps[this.part].unwrap_object = object;
+          this.userProvider.setUnfinishedGift(gift).then(data => {
+            this.navCtrl.pop();
+          });
+        });
+      }
+    });
+    modal.present();
   }
 
 }

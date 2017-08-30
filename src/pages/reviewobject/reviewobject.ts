@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 
 @Component({
-  selector: 'page-viewobject',
-  templateUrl: 'viewobject.html',
+  selector: 'page-reviewobject',
+  templateUrl: 'reviewobject.html',
 })
-export class ViewObjectPage {
+export class ReviewObjectPage {
 
   private object: any;
 
@@ -13,12 +13,8 @@ export class ViewObjectPage {
     this.object = navParams.get('object');
   }
 
-  use () {
-    this.viewCtrl.dismiss(true);
-  }
-
-  cancel () {
-    this.viewCtrl.dismiss(false);
+  dismiss () {
+    this.viewCtrl.dismiss();
   }
 
 }

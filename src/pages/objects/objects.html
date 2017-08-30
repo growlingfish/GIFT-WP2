@@ -27,13 +27,15 @@
 
     <ion-item-divider color="light">Existing objects</ion-item-divider>
 
-    <ion-item *ngFor="let object of objects">
+    <ng-container *ngFor="let object of objects">
+      <ion-item *ngIf="object.ID !== selected">
         <ion-avatar item-start (click)="viewExisting(object)">
           <img [src]="object.post_image">
         </ion-avatar>
         <span (click)="viewExisting(object)">{{object.post_title}}</span>
-      <button ion-button clear item-end (click)="addExisting(object)">Use</button>
-    </ion-item>
+        <button ion-button clear item-end (click)="addExisting(object)">{{buttonAction}}</button>
+      </ion-item>
+    </ng-container>
   </ion-list>
 
 </ion-content>

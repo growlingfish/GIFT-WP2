@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 
 import { LogoutPage } from '../logout/logout';
+import { ReviewObjectPage } from '../reviewobject/reviewobject';
+import { ReviewMessagePage } from '../reviewmessage/reviewmessage';
 
 @Component({
   selector: 'page-reviewgift',
@@ -11,7 +13,7 @@ export class ReviewGiftPage {
 
   gift: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
     this.gift = navParams.get('gift');
   }
 
@@ -25,6 +27,18 @@ export class ReviewGiftPage {
 
   logout () {
     this.navCtrl.push(LogoutPage);
+  }
+
+  viewObject (part) {
+    this.modalCtrl.create(ReviewObjectPage, {
+      object: this.gift.wraps[part].unwrap_object
+    }).present();
+  }
+
+  viewMessage (part) {
+    this.modalCtrl.create(ReviewMessagePage, {
+      message: this.gift.payloads[part].post_content
+    }).present();
   }
 
 }

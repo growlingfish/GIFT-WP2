@@ -16,43 +16,44 @@
 
   <ion-grid class="recipient">
     <ion-row>
-      <ion-col col-4 class="recipient-icon">
+      <ion-col col-3 class="recipient-icon">
         <ion-icon name="contact"></ion-icon>
       </ion-col>
-      <ion-col col-8>
-        <h2>{{gift.recipient.nickname}}</h2>
+      <ion-col col-9>
+        <h2>To {{gift.recipient.nickname}}</h2>
         <p>Sent at {{gift.post_date}}</p>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-grid class="parts">
-    <ion-row *ngFor="let part of [0,1,2]">
-      <ion-col class="part-1">
-        <h2>Part {{part + 1}}</h2>
-        <p>Incomplete</p>
-      </ion-col>
-      <ion-col class="part-2">
-        <h2><ion-icon name="image"></ion-icon></h2>
-        <p>Add an object</p>
-      </ion-col>
-      <ion-col class="part-3">
-        <h2><ion-icon name="quote"></ion-icon></h2>
-        <p>Add a message</p>
       </ion-col>
     </ion-row>
   </ion-grid>
 
   <ion-grid class="giftcard">
     <ion-row>
-      <ion-col col-4 class="giftcard-icon">
+      <ion-col col-3 class="giftcard-icon">
         <ion-icon name="create"></ion-icon>
       </ion-col>
-      <ion-col col-8>
+      <ion-col col-9>
         <h2>{{gift.giftcards[0].post_title}}</h2>
         <p [innerHTML]="gift.giftcards[0].post_content"></p>
       </ion-col>
     </ion-row>
+  </ion-grid>
+
+  <ion-grid class="parts">
+    <ng-container *ngFor="let part of [0,1,2]">
+      <ion-row *ngIf="!!this.gift.wraps[part] && !!this.gift.wraps[part].unwrap_object && !!this.gift.wraps[part].unwrap_object.ID && !!this.gift.payloads[part] && !!this.gift.payloads[part].post_content">
+        <ion-col class="part-1">
+          <h2>Part {{part + 1}}</h2>
+        </ion-col>
+        <ion-col class="part-2" (click)="viewObject(part)">
+          <h2><ion-icon name="image"></ion-icon></h2>
+          <p>{{this.gift.wraps[part].unwrap_object.post_title.substring(0,10) + '...'}}</p>
+        </ion-col>
+        <ion-col class="part-3" (click)="viewMessage(part)">
+          <h2><ion-icon name="quote"></ion-icon></h2>
+          <p [innerHTML]="this.gift.payloads[part].post_content.substring(0,10) + '...'"></p>
+        </ion-col>
+      </ion-row>
+    </ng-container>
   </ion-grid>
 
 </ion-content>

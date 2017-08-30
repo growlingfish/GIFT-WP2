@@ -21,6 +21,8 @@ import { NewMessagePage } from '../pages/newmessage/newmessage';
 import { ViewObjectPage } from '../pages/viewobject/viewobject';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ContactsPage } from '../pages/contacts/contacts';
+import { ReviewMessagePage } from '../pages/reviewmessage/reviewmessage';
+import { ReviewObjectPage } from '../pages/reviewobject/reviewobject';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -46,7 +48,9 @@ import { FCM } from '@ionic-native/fcm';
     ObjectsPage,
     ViewObjectPage,
     TabsPage,
-    ContactsPage
+    ContactsPage,
+    ReviewMessagePage,
+    ReviewObjectPage
   ],
   imports: [
     BrowserModule,
@@ -72,7 +76,9 @@ import { FCM } from '@ionic-native/fcm';
     ObjectsPage,
     ViewObjectPage,
     TabsPage,
-    ContactsPage
+    ContactsPage,
+    ReviewMessagePage,
+    ReviewObjectPage
   ],
   providers: [
     StatusBar,

@@ -25,6 +25,18 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-grid class="giftcard">
+    <ion-row (click)="editGiftcard()">
+      <ion-col col-3 class="giftcard-icon">
+        <ion-icon [name]="giftcardIcon()" [color]="giftcardIconColour()"></ion-icon>
+      </ion-col>
+      <ion-col col-9>
+        <h2 [innerHTML]="giftcardTitle()"></h2>
+        <p [innerHTML]="giftcardSubtitle()"></p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   
   <ion-grid class="build">
     <ion-row>
@@ -43,28 +55,21 @@
       </ion-col>
       <ion-col col-4 class="component-2 {{objectComplete(part) ? 'complete' : 'incomplete'}}" (click)="editObject(part)">
         <h2><ion-icon name="image"></ion-icon></h2>
-        <p>{{objectComplete(part) ? this.gift.wraps[part].unwrap_object.post_title : 'Tap to add an object'}}</p>
+        <p>{{objectComplete(part) ? this.gift.wraps[part].unwrap_object.post_title.substring(0,10) + '...' : 'Tap to add an object'}}</p>
       </ion-col>
       <ion-col col-4 class="component-3 {{payloadComplete(part) ? 'complete' : 'incomplete'}}" (click)="editMessage(part)">
         <h2><ion-icon name="quote"></ion-icon></h2>
-        <p>{{payloadComplete(part) ? this.gift.payloads[part].post_content : 'Tap to add a message'}}</p>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-grid class="giftcard">
-    <ion-row (click)="editGiftcard()">
-      <ion-col col-3 class="giftcard-icon">
-        <ion-icon [name]="giftcardIcon()" [color]="giftcardIconColour()"></ion-icon>
-      </ion-col>
-      <ion-col col-9>
-        <h2 [innerHTML]="giftcardTitle()"></h2>
-        <p [innerHTML]="giftcardSubtitle()"></p>
+        <p>{{payloadComplete(part) ? this.gift.payloads[part].post_content.substring(0,10) + '...' : 'Tap to add a message'}}</p>
       </ion-col>
     </ion-row>
   </ion-grid>
 
   <ion-grid class="send">
+    <ion-row>
+      <ion-col>
+        <p>Is the experience ready to send to the recipient?</p>
+      </ion-col>
+    </ion-row>
     <ion-row>
       <ion-col>
         <button ion-button block (click)="send()">Send gift</button>
