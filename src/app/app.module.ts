@@ -18,6 +18,7 @@ import { TheirGiftsPage } from '../pages/theirgifts/theirgifts';
 import { ActivityPage } from '../pages/activity/activity';
 import { ObjectsPage } from '../pages/objects/objects';
 import { NewMessagePage } from '../pages/newmessage/newmessage';
+import { ViewObjectPage } from '../pages/viewobject/viewobject';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ContactsPage } from '../pages/contacts/contacts';
 
@@ -43,6 +44,7 @@ import { FCM } from '@ionic-native/fcm';
     ActivityPage,
     NewMessagePage,
     ObjectsPage,
+    ViewObjectPage,
     TabsPage,
     ContactsPage
   ],
@@ -68,6 +70,7 @@ import { FCM } from '@ionic-native/fcm';
     ActivityPage,
     NewMessagePage,
     ObjectsPage,
+    ViewObjectPage,
     TabsPage,
     ContactsPage
   ],

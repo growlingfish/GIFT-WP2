@@ -55,6 +55,10 @@ export class GlobalVarProvider {
   getInviteURL (userId, email, name) {
     return this.getApiBase() + "new/receiver/" + email + "/" + name + "/" + userId;
   }
+
+  getObjectsURL (userId) {
+    return this.getApiBase() + "objects/" + userId;
+  }
 /*
   getReceivedURL (giftId) {
     return this.getApiBase() + "received/gift/" + giftId;
