@@ -16,6 +16,8 @@ import { ReviewGiftPage } from '../pages/reviewgift/reviewgift';
 import { MyGiftsPage } from '../pages/mygifts/mygifts';
 import { TheirGiftsPage } from '../pages/theirgifts/theirgifts';
 import { ActivityPage } from '../pages/activity/activity';
+import { ObjectsPage } from '../pages/objects/objects';
+import { NewMessagePage } from '../pages/newmessage/newmessage';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ContactsPage } from '../pages/contacts/contacts';
 
@@ -39,6 +41,8 @@ import { FCM } from '@ionic-native/fcm';
     MyGiftsPage,
     TheirGiftsPage,
     ActivityPage,
+    NewMessagePage,
+    ObjectsPage,
     TabsPage,
     ContactsPage
   ],
@@ -62,6 +66,8 @@ import { FCM } from '@ionic-native/fcm';
     MyGiftsPage,
     TheirGiftsPage,
     ActivityPage,
+    NewMessagePage,
+    ObjectsPage,
     TabsPage,
     ContactsPage
   ],

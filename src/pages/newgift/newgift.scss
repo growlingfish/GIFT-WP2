@@ -33,16 +33,40 @@ page-newgift {
             text-transform: uppercase;
         }
 
-        .part-1 {
+        .component-1 {
             background: #333333;
         }
 
-        .part-2 {
+        .component-1.complete {
+            background: green;
+        }
+
+        .component-1.incomplete {
+            background: red;
+        }
+
+        .component-2 {
             background: #666666;
         }
 
-        .part-3 {
+        .component-2.complete {
+            background: green;
+        }
+
+        .component-2.incomplete {
+            background: red;
+        }
+
+        .component-3 {
             background: #999999;
+        }
+
+        .component-3.complete {
+            background: green;
+        }
+
+        .component-3.incomplete {
+            background: red;
         }
     }
 
@@ -56,6 +80,10 @@ page-newgift {
             padding-right: 20px;
         }
 
+    }
+
+    .send {
+        text-align: center;
     }
 
 }

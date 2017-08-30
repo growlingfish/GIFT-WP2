@@ -16,10 +16,10 @@
 
   <ion-grid class="recipient">
     <ion-row (click)="editRecipient()">
-      <ion-col col-4 class="recipient-icon">
+      <ion-col col-3 class="recipient-icon">
         <ion-icon [name]="recipientIcon()" [color]="recipientIconColour()"></ion-icon>
       </ion-col>
-      <ion-col col-8>
+      <ion-col col-9>
         <h2 [innerHTML]="recipientTitle()"></h2>
         <p [innerHTML]="recipientSubtitle()"></p>
       </ion-col>
@@ -37,29 +37,29 @@
 
   <ion-grid class="parts">
     <ion-row *ngFor="let part of [0,1,2]">
-      <ion-col class="part-1">
+      <ion-col col-4 class="component-1 {{partComplete(part) ? 'complete' : 'incomplete'}}" (click)="partCompleteInfo(part)">
         <h2>Part {{part + 1}}</h2>
-        <p>Incomplete</p>
+        <p>{{partComplete(part) ? 'Complete' : 'Incomplete'}}</p>
       </ion-col>
-      <ion-col class="part-2">
+      <ion-col col-4 class="component-2 {{objectComplete(part) ? 'complete' : 'incomplete'}}" (click)="editObject(part)">
         <h2><ion-icon name="image"></ion-icon></h2>
-        <p>Add an object</p>
+        <p>{{objectComplete(part) ? this.gift.wraps[part].unwrap_object.post_title : 'Tap to add an object'}}</p>
       </ion-col>
-      <ion-col class="part-3">
+      <ion-col col-4 class="component-3 {{payloadComplete(part) ? 'complete' : 'incomplete'}}" (click)="editMessage(part)">
         <h2><ion-icon name="quote"></ion-icon></h2>
-        <p>Add a message</p>
+        <p>{{payloadComplete(part) ? this.gift.payloads[part].post_content : 'Tap to add a message'}}</p>
       </ion-col>
     </ion-row>
   </ion-grid>
 
   <ion-grid class="giftcard">
-    <ion-row>
-      <ion-col col-4 class="giftcard-icon">
-        <ion-icon name="add-circle"></ion-icon>
+    <ion-row (click)="editGiftcard()">
+      <ion-col col-3 class="giftcard-icon">
+        <ion-icon [name]="giftcardIcon()" [color]="giftcardIconColour()"></ion-icon>
       </ion-col>
-      <ion-col col-8>
-        <h2>Add a card</h2>
-        <p>How would you introduce the experience?</p>
+      <ion-col col-9>
+        <h2 [innerHTML]="giftcardTitle()"></h2>
+        <p [innerHTML]="giftcardSubtitle()"></p>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -68,6 +68,11 @@
     <ion-row>
       <ion-col>
         <button ion-button block (click)="send()">Send gift</button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button color="danger" (click)="scrapGift()">Scrap this gift</button>
       </ion-col>
     </ion-row>
   </ion-grid>
