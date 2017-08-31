@@ -18,10 +18,18 @@
 
   <ion-list inset>
 
-    <ion-item (click)="startNew()">
+    <ion-item (click)="startNew()" *ngIf="!unfinished">
       <ion-icon name="add-circle" item-start color="secondary"></ion-icon>
       Make a new gift
       <button ion-button clear item-end>Start</button>
+    </ion-item>
+
+    <ion-item-divider color="light" *ngIf="unfinished">Unsent</ion-item-divider>
+
+    <ion-item (click)="startNew()" *ngIf="unfinished">
+      <ion-icon name="add-circle" item-start color="secondary"></ion-icon>
+      {{unfinishedTitle}}
+      <button ion-button clear item-end>Continue</button>
     </ion-item>
 
     <ion-item-divider color="light">Already sent</ion-item-divider>

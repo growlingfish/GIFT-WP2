@@ -14,10 +14,25 @@ import { UserProvider } from '../../providers/user/user';
 export class TheirGiftsPage {
 
   private gifts: Array<any>;
+  private unfinished: boolean = false;
+  private unfinishedTitle: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider) {}
+
+  ionViewDidEnter () {
     this.userProvider.getTheirGifts().then(data => {
       this.gifts = data;
+    });
+
+    this.userProvider.getUnfinishedGift().then(existingGift => {
+      if (existingGift != null) {
+        this.unfinished = true;
+        if (!!existingGift.post_title && existingGift.post_title != "Tap to name this gift") {
+          this.unfinishedTitle = existingGift.post_title;
+        } else {
+          this.unfinishedTitle = "Continue making this gift";
+        }
+      }
     });
   }
 

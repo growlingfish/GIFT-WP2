@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 
-import { NewGiftPage } from '../newgift/newgift';
-
 import { UserProvider } from '../../providers/user/user';
 
 @Component({
@@ -24,9 +22,10 @@ export class InvitePage {
       if (recipient !== false) {
         this.userProvider.updateContacts();
         this.userProvider.getUnfinishedGift().then(gift => {
-          gift.recipient = recipient;
+          gift.recipient = recipient.data;
           this.userProvider.setUnfinishedGift(gift).then(data => {
-            this.navCtrl.popTo(NewGiftPage);
+            this.navCtrl.pop();
+            this.navCtrl.pop();
           });
         });
       } else {

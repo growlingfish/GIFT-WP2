@@ -88,6 +88,14 @@ export class UserProvider {
     return this.storage.ready().then(() => this.storage.set('objects', val));
   }
 
+  public getLocations (): Promise<any> {
+    return this.storage.ready().then(() => this.storage.get('locations'));
+  }
+
+  public setLocations (val: any): Promise<any> {
+    return this.storage.ready().then(() => this.storage.set('locations', val));
+  }
+
   public login (username: string, password: string) {
     if (username === null || password === null) {
       return Observable.throw("Username or password missing");
@@ -140,6 +148,17 @@ export class UserProvider {
                 },
                 error => {
                   console.log("Failed getting objects");
+                });
+
+                this.updateLocations().subscribe(complete => {
+                  if (complete) {
+                    console.log("Succeeded getting locations");
+                  } else {
+                    console.log("Failed getting locations");
+                  }
+                },
+                error => {
+                  console.log("Failed getting locations");
                 });
 
                 //https://github.com/fechanique/cordova-plugin-fcm
@@ -279,6 +298,30 @@ export class UserProvider {
           .subscribe(data => {
             if (typeof data.success !== 'undefined' && data.success) {
               this.setObjects(data.objects);
+              observer.next(true);
+              observer.complete();
+            } else {
+              observer.next(false);
+              observer.complete();
+            }
+          },
+          function (error) {
+            observer.next(false);
+            observer.complete();
+          });
+      });
+    });
+  }
+
+  updateLocations (): Observable<any> {
+    return Observable.create(observer => {
+      var user = this.getUser();
+      user.then(data => {
+        this.http.get(this.globalVar.getLocationsURL())
+          .map(response => response.json())
+          .subscribe(data => {
+            if (typeof data.success !== 'undefined' && data.success) {
+              this.setLocations(data.locations);
               observer.next(true);
               observer.complete();
             } else {

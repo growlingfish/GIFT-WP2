@@ -59,6 +59,10 @@ export class GlobalVarProvider {
   getObjectsURL (userId) {
     return this.getApiBase() + "objects/" + userId;
   }
+
+  getLocationsURL () {
+    return this.getApiBase() + "locations/";
+  }
 /*
   getReceivedURL (giftId) {
     return this.getApiBase() + "received/gift/" + giftId;

@@ -13,14 +13,17 @@ import { RegisterPage } from '../pages/register/register';
 import { RolePage } from '../pages/role/role';
 import { NewGiftPage } from '../pages/newgift/newgift';
 import { ReviewGiftPage } from '../pages/reviewgift/reviewgift';
+import { ReviewMyGiftPage } from '../pages/reviewmygift/reviewmygift';
 import { MyGiftsPage } from '../pages/mygifts/mygifts';
 import { TheirGiftsPage } from '../pages/theirgifts/theirgifts';
 import { ActivityPage } from '../pages/activity/activity';
 import { ObjectsPage } from '../pages/objects/objects';
 import { NewMessagePage } from '../pages/newmessage/newmessage';
 import { ViewObjectPage } from '../pages/viewobject/viewobject';
+import { NewObjectPage } from '../pages/newobject/newobject';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ContactsPage } from '../pages/contacts/contacts';
+import { InvitePage } from '../pages/invite/invite';
 import { ReviewMessagePage } from '../pages/reviewmessage/reviewmessage';
 import { ReviewObjectPage } from '../pages/reviewobject/reviewobject';
 
@@ -41,14 +44,17 @@ import { FCM } from '@ionic-native/fcm';
     RolePage,
     NewGiftPage,
     ReviewGiftPage,
+    ReviewMyGiftPage,
     MyGiftsPage,
     TheirGiftsPage,
     ActivityPage,
     NewMessagePage,
     ObjectsPage,
     ViewObjectPage,
+    NewObjectPage,
     TabsPage,
     ContactsPage,
+    InvitePage,
     ReviewMessagePage,
     ReviewObjectPage
   ],
@@ -69,14 +75,17 @@ import { FCM } from '@ionic-native/fcm';
     RolePage,
     NewGiftPage,
     ReviewGiftPage,
+    ReviewMyGiftPage,
     MyGiftsPage,
     TheirGiftsPage,
     ActivityPage,
     NewMessagePage,
     ObjectsPage,
     ViewObjectPage,
+    NewObjectPage,
     TabsPage,
     ContactsPage,
+    InvitePage,
     ReviewMessagePage,
     ReviewObjectPage
   ],

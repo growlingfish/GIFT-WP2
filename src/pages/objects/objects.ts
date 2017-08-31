@@ -3,6 +3,7 @@ import { NavController, NavParams, ModalController } from 'ionic-angular';
 
 import { LogoutPage } from '../logout/logout';
 import { ViewObjectPage } from '../viewobject/viewobject';
+import { NewObjectPage } from '../newobject/newobject';
 
 import { UserProvider } from '../../providers/user/user';
 
@@ -24,6 +25,9 @@ export class ObjectsPage {
       this.selected = selected;
       this.buttonAction = "Replace";
     }
+  }
+
+  ionViewDidEnter () {
     this.userProvider.getObjects().then(data => {
       this.objects = data;
     });
@@ -48,7 +52,7 @@ export class ObjectsPage {
   }
 
   addNew () {
-
+    this.navCtrl.push(NewObjectPage);
   }
 
   addExisting (object) {

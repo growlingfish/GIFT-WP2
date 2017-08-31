@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { LogoutPage } from '../logout/logout';
 import { InvitePage } from '../invite/invite';
@@ -14,7 +14,9 @@ export class ContactsPage {
 
   private contacts: Array<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider) {}
+
+  ionViewDidEnter () {
     this.userProvider.getContacts().then(data => {
       this.contacts = data;
     });
@@ -36,7 +38,7 @@ export class ContactsPage {
   }
 
   inviteNew () {
-    this.modalCtrl.create(InvitePage).present();
+    this.navCtrl.push(InvitePage);
   }
 
   invite (contact: any) {
