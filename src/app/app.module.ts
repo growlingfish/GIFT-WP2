@@ -4,6 +4,10 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
+import { Camera } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { FilePath } from '@ionic-native/file-path';
 
 import { IntroPage } from '../pages/intro/intro';
 import { LoginPage } from '../pages/login/login';
@@ -95,7 +99,11 @@ import { FCM } from '@ionic-native/fcm';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserProvider,
     GlobalVarProvider,
-    FCM
+    FCM,
+    Camera,
+    File,
+    FileTransfer,
+    FilePath
   ]
 })
 export class AppModule {}
