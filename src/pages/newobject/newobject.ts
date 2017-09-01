@@ -174,6 +174,7 @@ export class NewObjectPage {
       console.log(response);
       if (response.success) {
         this.uploadedFilename = response.filename;
+        this.object.post_image = response.url;
       } else {
         this.showError('Error while uploading file');
       }
