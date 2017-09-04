@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Http } from '@angular/http';
+import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { Platform } from 'ionic-angular';
@@ -165,9 +165,9 @@ export class UserProvider {
                 //https://console.firebase.google.com/project/gift-eu-1491403324909/notification
                 this.platform.ready().then(() => {
                   if (this.platform.is('cordova')) {
-                    this.fcm.getToken().then(token => {
+                    /*this.fcm.getToken().then(token => {
                       console.log(token);
-                    });
+                    });*/
                   }
                 });
 
@@ -355,6 +355,59 @@ export class UserProvider {
             observer.next(false);
             observer.complete();
           });
+      });
+    });
+  }
+
+  finaliseObject (object: any) {
+    return Observable.create(observer => {
+      var user = this.getUser();
+      user.then(data => {
+        let body = new URLSearchParams();
+        body.append('object', JSON.stringify(object));
+        body.append('owner', data.ID);
+        this.http.post(this.globalVar.getFinaliseObjectURL(), body)
+          .map(response => response.json())
+          .subscribe(data => {
+            if (typeof data.success !== 'undefined' && data.success) {
+              observer.next(data.object);
+              observer.complete();
+            } else {
+              observer.next(false);
+              observer.complete();
+            }
+          },
+          function (error) {
+            observer.next(false);
+            observer.complete();
+          });
+      });
+    });
+  }
+
+  sendGift () {
+    return Observable.create(observer => {
+      this.getUser().then(data => {
+        this.getUnfinishedGift().then(gift => {
+          let body = new URLSearchParams();
+          body.append('gift', JSON.stringify(gift));
+          body.append('sender', data.ID);
+          this.http.post(this.globalVar.getFinaliseGiftURL(), body)
+            .map(response => response.json())
+            .subscribe(data => {
+              if (typeof data.success !== 'undefined' && data.success) {
+                observer.next(true);
+                observer.complete();
+              } else {
+                observer.next(false);
+                observer.complete();
+              }
+            },
+            function (error) {
+              observer.next(false);
+              observer.complete();
+            });
+        });
       });
     });
   }

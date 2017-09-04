@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 
 import { LogoutPage } from '../logout/logout';
 import { ContactsPage } from '../contacts/contacts';
@@ -16,8 +16,9 @@ export class NewGiftPage {
 
   private gift: any;
   private edited: boolean;
+  loading: Loading;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, private alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     this.edited = false;
 
     this.gift = {
@@ -44,30 +45,22 @@ export class NewGiftPage {
             "post_author": data.ID,
             "post_title": "Tap to name this gift",
             "post_status": "draft",
-            "recipient": {
-              //"ID": 2
-            },
+            "recipient": {},
             "wraps": [
               {
                 "post_status": "draft",
                 "menu_order": 0,
-                "unwrap_object": {
-                  //"ID": 484,
-                }
+                "unwrap_object": {}
               },
               {
                 "post_status": "draft",
                 "menu_order": 1,
-                "unwrap_object": {
-                 //"ID": 484,
-                }
+                "unwrap_object": {}
               },
               {
                 "post_status": "draft",
                 "menu_order": 2,
-                "unwrap_object": {
-                  //"ID": 484,
-                }
+                "unwrap_object": {}
               }
             ],
             "payloads": [
@@ -166,7 +159,25 @@ export class NewGiftPage {
 
   send () {
     if (this.isComplete()) {
-      console.log("To do");
+      this.loading = this.loadingCtrl.create({
+        content: 'Sending ...',
+        duration: 10000
+      });
+      this.loading.present();
+      this.userProvider.sendGift().subscribe(complete => {
+        if (complete) {
+          this.userProvider.clearUnfinishedGift().then(cleared => {
+            this.navCtrl.popToRoot();
+          });
+        } else {
+          this.loading.dismissAll();
+          this.showError();
+        }
+      },
+      error => {        
+        this.loading.dismissAll();
+        this.showError();
+      });
     } else {
       let alert = this.alertCtrl.create({
         title: "Gift not complete",
@@ -177,7 +188,19 @@ export class NewGiftPage {
     }
   }
 
+  showError() {
+    let alert = this.alertCtrl.create({
+      title: 'Gift sending unsuccessful',
+      subTitle: "Please try again",
+      buttons: ['OK']
+    });
+    alert.present(prompt);
+  }
+
   isComplete (): boolean {
+    if (!(!!this.gift.post_title && (this.gift.post_title != "A new gift" || this.gift.post_title != "Tap to name this gift"))) {
+      return false;
+    }
     if (!(!!this.gift.recipient && !!this.gift.recipient.ID)) {
       return false;
     }

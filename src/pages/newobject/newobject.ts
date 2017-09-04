@@ -17,23 +17,33 @@ declare var cordova: any;
   templateUrl: 'newobject.html',
 })
 export class NewObjectPage {
-  //{"ID":755,"post_author":"2","post_date":"2017-07-25 15:44:31","post_date_gmt":"2017-07-25 15:44:31","post_content":"<p>fourth test</p>\n","post_title":"..","post_excerpt":"","post_status":"publish","comment_status":"closed","ping_status":"closed","post_password":"","post_name":"755","to_ping":"","pinged":"","post_modified":"2017-07-25 15:44:31","post_modified_gmt":"2017-07-25 15:44:31","post_content_filtered":"","post_parent":0,"guid":"https://gifting.digital/object/755/","menu_order":0,"post_type":"object","post_mime_type":"","comment_count":"0","filter":"raw","post_image":"https://gifting.digital/app/uploads/2017/07/1500997445762-150x150.jpg"}
   object: any = {
-    "post_title": "A new object",
-    "location": {}
+    "post_title": "",
+    "location": {},
+    "post_content": "",
+    "post_image": ""
   };
   locations: Array<any>;
   lastImage: string = null;
   loading: Loading;
+  part: number;
   uploadedFilename: string = null;
+  selectOptions = {
+    title: 'Where is the object?',
+    subTitle: 'Choose the most suitable location from this list'
+  };
 
-  constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams, private globalVar: GlobalVarProvider, private userProvider: UserProvider, private alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, private camera: Camera, private filePath: FilePath, private file: File, public toastCtrl: ToastController, private transfer: FileTransfer, public loadingCtrl: LoadingController) {}
+  constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams, private globalVar: GlobalVarProvider, private userProvider: UserProvider, private alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, private camera: Camera, private filePath: FilePath, private file: File, public toastCtrl: ToastController, private transfer: FileTransfer, public loadingCtrl: LoadingController) {
+    this.part = navParams.get('part');
+  }
 
   ionViewDidEnter () {
     this.userProvider.getUser().then(data => {
       this.object = {
-        "post_title": "A new object",
-        "location": {}
+        "post_title": "",
+        "location": {},
+        "post_content": "",
+        "post_image": ""
       };
       this.userProvider.getLocations().then(locations => {
         this.locations = locations;
@@ -106,7 +116,7 @@ export class NewObjectPage {
         this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
       }
     }, (err) => {
-      this.showError('Error while selecting image');
+      this.showErrorToast('Error while selecting image');
     });
   }
 
@@ -124,11 +134,11 @@ export class NewObjectPage {
       this.lastImage = newFileName;
       this.uploadImage();
     }, error => {
-      this.showError('Error while storing file.');
+      this.showErrorToast('Error while storing file.');
     });
   }
   
-  showError (text) {
+  showErrorToast (text) {
     let toast = this.toastCtrl.create({
       message: text,
       duration: 3000,
@@ -171,17 +181,16 @@ export class NewObjectPage {
     fileTransfer.upload(targetPath, url, options).then(data => {
       this.loading.dismissAll();
       let response = JSON.parse(data.response);
-      console.log(response);
       if (response.success) {
         this.uploadedFilename = response.filename;
         this.object.post_image = response.url;
       } else {
-        this.showError('Error while uploading file');
+        this.showErrorToast('Error while uploading file');
       }
     }, err => {
       this.loading.dismissAll();
       console.log(err);
-      this.showError('Error while uploading file');
+      this.showErrorToast('Error while uploading file');
     });
   }
   
@@ -215,7 +224,12 @@ export class NewObjectPage {
   }
 
   isComplete (): boolean {
-    if (!(!!this.object.post_image && !!this.object.post_title && !!this.object.post_content)) {
+    if (!(
+        !!this.object.post_image && this.object.post_image.length > 0 &&
+        !!this.object.post_title && this.object.post_title.length > 0 &&
+        !!this.object.post_content && this.object.post_content.length > 0 &&
+        !!this.object.location
+    )) {
       return false;
     }
     return true;
@@ -223,24 +237,32 @@ export class NewObjectPage {
 
   add () {
     if (this.isComplete()) {
-      console.log("To do");
-      /*
-      this.loading.present();
-      this.workshop.finaliseObject(this.name, this.description, this.uploadedFilename).subscribe(added => {
-        if (added) {
-          this.workshop.gift.getWrapWithID(this.wrapId).setChallenge('object', added.id);
-          this.workshop.storeGift();
-          this.dismiss();
-        } else {
-          console.log("Object add failed");
-        }
-        this.loading.dismiss();
-      },
-      error => {
-        console.log(error);
-        this.loading.dismiss();
+      this.loading = this.loadingCtrl.create({
+        content: 'Creating ...',
+        duration: 10000
       });
-      */
+      this.loading.present();
+      this.userProvider.finaliseObject(this.object).subscribe(object => {
+        if (object) {
+          this.userProvider.getUnfinishedGift().then(gift => {
+            gift.wraps[this.part].unwrap_object = object;
+            this.userProvider.setUnfinishedGift(gift).then(data => {
+              this.userProvider.updateObjects().subscribe(complete => {
+                this.navCtrl.pop();
+                this.navCtrl.pop();
+                this.loading.dismissAll();
+              });
+            });
+          });
+        } else {
+          this.loading.dismissAll();
+          this.showError();
+        }
+      },
+      error => {        
+        this.loading.dismissAll();
+        this.showError();
+      });
     } else {
       let alert = this.alertCtrl.create({
         title: "Object not complete",
@@ -249,6 +271,15 @@ export class NewObjectPage {
       });
       alert.present(prompt);
     }
+  }
+
+  showError() {
+    let alert = this.alertCtrl.create({
+      title: 'Object creation unsuccessful',
+      subTitle: "Please try again",
+      buttons: ['OK']
+    });
+    alert.present(prompt);
   }
 
 }

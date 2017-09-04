@@ -27,7 +27,7 @@
     <ion-item-divider color="light" *ngIf="unfinished">Unsent</ion-item-divider>
 
     <ion-item (click)="startNew()" *ngIf="unfinished">
-      <ion-icon name="add-circle" item-start color="secondary"></ion-icon>
+      <ion-icon name="add-circle" item-start color="danger"></ion-icon>
       {{unfinishedTitle}}
       <button ion-button clear item-end>Continue</button>
     </ion-item>

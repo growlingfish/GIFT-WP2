@@ -52,7 +52,9 @@ export class ObjectsPage {
   }
 
   addNew () {
-    this.navCtrl.push(NewObjectPage);
+    this.navCtrl.push(NewObjectPage, {
+      part: this.part
+    });
   }
 
   addExisting (object) {

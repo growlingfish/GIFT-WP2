@@ -24,8 +24,10 @@ export class InvitePage {
         this.userProvider.getUnfinishedGift().then(gift => {
           gift.recipient = recipient.data;
           this.userProvider.setUnfinishedGift(gift).then(data => {
-            this.navCtrl.pop();
-            this.navCtrl.pop();
+            this.userProvider.updateContacts().subscribe(complete => {
+              this.navCtrl.pop();
+              this.navCtrl.pop();
+            });
           });
         });
       } else {

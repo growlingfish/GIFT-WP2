@@ -67,6 +67,14 @@ export class GlobalVarProvider {
   getObjectPhotoUploadURL () {
     return this.getApiBase() + "upload/object/";
   }
+
+  getFinaliseObjectURL () {
+    return this.getApiBase() + "new/object/";
+  }
+
+  getFinaliseGiftURL () {
+    return this.getApiBase() + "new/gift/";
+  }
 /*
   getReceivedURL (giftId) {
     return this.getApiBase() + "received/gift/" + giftId;

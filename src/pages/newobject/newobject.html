@@ -30,20 +30,20 @@
 
   <h2>Name</h2>
   <p>What do you call this object?</p>
-  <ion-input placeholder="Object title" name="title" [(ngModel)]="title" required></ion-input>
+  <ion-input placeholder="Tap here to give it a name" name="title" [(ngModel)]="object.post_title" required></ion-input>
 
   <h2>Location</h2>
   <p>If the recipient cannot find the object, they will be able to ask the app to reveal the location. Choose the most appropriate location from the list.</p>
   <ion-item>
-    <ion-label>Choose a location</ion-label>
-    <ion-select [(ngModel)]="object.location" multiple="false">
+    <ion-label>Tap here to choose</ion-label>
+    <ion-select [(ngModel)]="object.location" multiple="false" [selectOptions]="selectOptions">
       <ion-option *ngFor="let l of locations" [value]="l">{{l.post_title}}</ion-option>
     </ion-select>
   </ion-item>
 
   <h2>Directions</h2>
   <p>Tell the recipient how they should find the object.</p>
-  <ion-textarea placeholder="Directions to object" name="directions" [(ngModel)]="directions" required></ion-textarea>
+  <ion-textarea placeholder="Tap here to add directions" name="directions" [(ngModel)]="object.post_content" required></ion-textarea>
 
   <ion-grid class="add">
     <ion-row>
