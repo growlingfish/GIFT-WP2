@@ -26,6 +26,7 @@ export class TheirGiftsPage {
 
     this.userProvider.getUnfinishedGift().then(existingGift => {
       if (existingGift != null) {
+        console.log("Existinggift " + existingGift);
         this.unfinished = true;
         if (!!existingGift.post_title && existingGift.post_title != "Tap to name this gift") {
           this.unfinishedTitle = existingGift.post_title;

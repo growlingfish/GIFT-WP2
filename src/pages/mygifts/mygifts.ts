@@ -46,4 +46,20 @@ export class MyGiftsPage {
   logout () {
     this.navCtrl.push(LogoutPage);
   }
+
+  giftsOpened () {
+    if (!!this.gifts) {
+      return this.gifts.filter((item) => {
+        return item.status.unwrapped == true;
+      });
+    }
+  }
+
+  giftsUnopened () {
+    if (!!this.gifts) {
+      return this.gifts.filter((item) => {
+        return item.status.unwrapped == false;
+      });
+    }
+  }
 }

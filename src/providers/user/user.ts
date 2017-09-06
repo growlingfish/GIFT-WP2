@@ -30,6 +30,14 @@ export class UserProvider {
     return this.storage.ready().then(() => this.storage.set('seenRoles', val));
   }
 
+  public getFCMToken (): Promise<string> {
+    return this.storage.ready().then(() => this.storage.get('fcmToken'));
+  }
+
+  public setFCMToken (val: string) {
+    return this.storage.ready().then(() => this.storage.set('fcmToken', val));
+  }
+
   /*
   var user = this.userProvider.getUser();
         user.then(data => {
@@ -165,9 +173,19 @@ export class UserProvider {
                 //https://console.firebase.google.com/project/gift-eu-1491403324909/notification
                 this.platform.ready().then(() => {
                   if (this.platform.is('cordova')) {
-                    /*this.fcm.getToken().then(token => {
-                      console.log(token);
-                    });*/
+                    this.fcm.getToken().then(token => {
+                      this.setFCMToken(token).then(token => {
+                        console.log("New token " + token);
+                      });
+                    }, error => {
+                      console.log(error);
+                    });
+
+                    this.fcm.onTokenRefresh().subscribe(token => {
+                      this.setFCMToken(token).then(token => {
+                        console.log("Refreshed token " + token);
+                      });
+                    });
                   }
                 });
 

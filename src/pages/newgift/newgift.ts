@@ -167,7 +167,8 @@ export class NewGiftPage {
       this.userProvider.sendGift().subscribe(complete => {
         if (complete) {
           this.userProvider.clearUnfinishedGift().then(cleared => {
-            this.navCtrl.popToRoot();
+            this.loading.dismissAll();
+            this.navCtrl.pop();
           });
         } else {
           this.loading.dismissAll();
