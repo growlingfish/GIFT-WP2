@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { LogoutPage } from '../logout/logout';
 import { ReviewMyGiftPage } from '../reviewmygift/reviewmygift';
+import { OpenMyGiftPage } from '../openmygift/openmygift';
 
 import { UserProvider } from '../../providers/user/user';
 
@@ -39,6 +40,12 @@ export class MyGiftsPage {
 
   review (gift) {
     this.navCtrl.push(ReviewMyGiftPage, {
+      gift: gift
+    })
+  }
+
+  open (gift) {
+    this.navCtrl.push(OpenMyGiftPage, {
       gift: gift
     })
   }

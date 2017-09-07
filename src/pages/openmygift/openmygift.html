@@ -1,0 +1,60 @@
+<ion-header>
+  
+  <ion-navbar>
+    <ion-title>{{gift.post_title}}</ion-title>
+    
+    <ion-buttons end>
+      <button ion-button icon-only (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-grid class="sender">
+    <ion-row>
+      <ion-col col-3 class="sender-icon">
+        <ion-icon name="contact"></ion-icon>
+      </ion-col>
+      <ion-col col-9>
+        <h2>From {{gift.post_author_data.nickname}}</h2>
+        <p>Sent at {{gift.post_date}}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="giftcard">
+    <ion-row>
+      <ion-col col-3 class="giftcard-icon">
+        <ion-icon name="create"></ion-icon>
+      </ion-col>
+      <ion-col col-9>
+        <h2>{{gift.giftcards[0].post_title}}</h2>
+        <p [innerHTML]="gift.giftcards[0].post_content"></p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="parts">
+    <ng-container *ngFor="let part of [0,1,2]">
+      <ion-row *ngIf="!!this.gift.wraps[part] && !!this.gift.wraps[part].unwrap_object && !!this.gift.wraps[part].unwrap_object.ID && !!this.gift.payloads[part] && !!this.gift.payloads[part].post_content">
+        <ion-col col-4 class="component-1 {{partComplete(part) ? 'complete' : 'incomplete'}}" (click)="partCompleteInfo(part)">
+          <h2>Part {{part + 1}}</h2>
+          <p>{{partComplete(part) ? 'Found' : 'Not found'}}</p>
+        </ion-col>
+        <ion-col col-4 class="component-2 {{objectComplete(part) ? 'complete' : 'incomplete'}}" (click)="canOpenObject(part) ? (objectComplete(part) ? viewObject(part) : openObject(part)) : objectInfo(part)">
+          <h2><ion-icon name="image"></ion-icon></h2>
+          <p>{{objectComplete(part) ? this.gift.wraps[part].unwrap_object.post_title.substring(0,10) + '...' : 'Tap to find object'}}</p>
+        </ion-col>
+        <ion-col col-4 class="component-3 {{payloadComplete(part) ? 'complete' : 'incomplete'}}" (click)="canOpenMessage(part) ? (payloadComplete(part) ? viewMessage(part) : openMessage(part)) : messageInfo(part)">
+          <h2><ion-icon name="quote"></ion-icon></h2>
+          <p [innerHTML]="payloadComplete(part) ? this.gift.payloads[part].post_content.substring(0,10) + '...' : 'Tap to read message'"></p>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+  </ion-grid>
+
+</ion-content>  

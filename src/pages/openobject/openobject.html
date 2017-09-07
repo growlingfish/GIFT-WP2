@@ -1,0 +1,40 @@
+<ion-header>
+  
+    <ion-navbar>
+      <ion-title>{{object.post_title}}</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  <ion-content padding>
+  
+    <ion-card>
+      <img [src]="object.post_image"/>
+      <ion-card-content>
+        <ion-card-title>
+          {{object.post_title}}
+        </ion-card-title>
+        <p [innerHTML]="object.post_content"></p>
+      </ion-card-content>
+    </ion-card>
+  
+    <ion-grid>
+  
+      <ion-row>
+        <ion-col class="found-col">
+          <button ion-button block color="secondary" (click)="found()">Found it</button>
+        </ion-col>
+        <ion-col class="back-col">
+          <button ion-button block (click)="dismiss()">Back</button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="!!object.location && object.location.length == 1 && !!object.location[0].post_title">
+        <ion-col class="help-col">
+          <button ion-button block color="danger" (click)="help()">I can't find it</button>
+        </ion-col>
+      </ion-row>
+  
+    </ion-grid>
+  
+  </ion-content>  

@@ -30,6 +30,9 @@ import { ContactsPage } from '../pages/contacts/contacts';
 import { InvitePage } from '../pages/invite/invite';
 import { ReviewMessagePage } from '../pages/reviewmessage/reviewmessage';
 import { ReviewObjectPage } from '../pages/reviewobject/reviewobject';
+import { OpenMyGiftPage } from '../pages/openmygift/openmygift';
+import { OpenMessagePage } from '../pages/openmessage/openmessage';
+import { OpenObjectPage } from '../pages/openobject/openobject';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -60,7 +63,10 @@ import { FCM } from '@ionic-native/fcm';
     ContactsPage,
     InvitePage,
     ReviewMessagePage,
-    ReviewObjectPage
+    ReviewObjectPage,
+    OpenMyGiftPage,
+    OpenMessagePage,
+    OpenObjectPage
   ],
   imports: [
     BrowserModule,
@@ -91,7 +97,10 @@ import { FCM } from '@ionic-native/fcm';
     ContactsPage,
     InvitePage,
     ReviewMessagePage,
-    ReviewObjectPage
+    ReviewObjectPage,
+    OpenMyGiftPage,
+    OpenMessagePage,
+    OpenObjectPage
   ],
   providers: [
     StatusBar,

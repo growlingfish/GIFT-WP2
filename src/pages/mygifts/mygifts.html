@@ -21,7 +21,7 @@
     <ion-item-divider color="light" *ngIf="true">Unopened</ion-item-divider>
 
 
-    <ion-item *ngFor="let gift of giftsUnopened()" (click)="review(gift)">
+    <ion-item *ngFor="let gift of giftsUnopened()" (click)="open(gift)">
       <ion-icon name="arrow-dropright-circle" item-start color="secondary"></ion-icon>
       <h2>{{ gift.post_title }}</h2>
       <p>From {{ gift.post_author_data.nickname }} at {{ gift.post_date }}</p>

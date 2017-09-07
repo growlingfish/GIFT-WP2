@@ -1,0 +1,30 @@
+<ion-header>
+    
+  <ion-navbar>
+    <ion-title>Message</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-grid>
+      
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-content [innerHTML]="this.message"></ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <button ion-button block (click)="dismiss()">Back</button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>
+    

@@ -80,6 +80,18 @@ export class UserProvider {
     return this.storage.ready().then(() => this.storage.remove('unfinishedGift'));
   }
 
+  public getUnopenedGift (giftId: number): Promise<any> {
+    return this.storage.ready().then(() => this.storage.get('unopenedGift' + giftId));
+  }
+
+  public setUnopenedGift (giftId: number, val: any): Promise<any> {
+    return this.storage.ready().then(() => this.storage.set('unopenedGift' + giftId, val));
+  }
+
+  public clearUnopenedGift (giftId: number): Promise<any> {
+    return this.storage.ready().then(() => this.storage.remove('unopenedGift' + giftId));
+  }
+
   public getContacts (): Promise<any> {
     return this.storage.ready().then(() => this.storage.get('contacts'));
   }
