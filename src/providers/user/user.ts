@@ -442,4 +442,52 @@ export class UserProvider {
     });
   }
 
+  unwrappedGift (giftId) {
+    return Observable.create(observer => {
+      this.getUser().then(data => {
+        this.getUnopenedGift(giftId).then(gift => {
+          this.http.get(this.globalVar.getUnwrappedURL(giftId))
+            .map(response => response.json())
+            .subscribe(data => {
+              if (typeof data.success !== 'undefined' && data.success) {
+                observer.next(true);
+                observer.complete();
+              } else {
+                observer.next(false);
+                observer.complete();
+              }
+            },
+            function (error) {
+              observer.next(false);
+              observer.complete();
+            });
+        });
+      });
+    });
+  }
+
+  receivedGift (giftId) {
+    return Observable.create(observer => {
+      this.getUser().then(data => {
+        this.getUnopenedGift(giftId).then(gift => {
+          this.http.get(this.globalVar.getReceivedURL(giftId))
+            .map(response => response.json())
+            .subscribe(data => {
+              if (typeof data.success !== 'undefined' && data.success) {
+                observer.next(true);
+                observer.complete();
+              } else {
+                observer.next(false);
+                observer.complete();
+              }
+            },
+            function (error) {
+              observer.next(false);
+              observer.complete();
+            });
+        });
+      });
+    });
+  }
+
 }

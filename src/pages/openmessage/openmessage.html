@@ -8,7 +8,7 @@
 
 <ion-content padding>
 
-  <ion-grid>
+  <ion-grid *ngIf="revealed">
       
     <ion-row>
       <ion-col>
@@ -20,11 +20,13 @@
 
     <ion-row>
       <ion-col>
-        <button ion-button block (click)="dismiss()">Back</button>
+        <button ion-button block (click)="back()">Back</button>
       </ion-col>
     </ion-row>
 
   </ion-grid>
+
+  <p *ngIf="!revealed">Shake!</p>
 
 </ion-content>
     

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ModalController, LoadingController, Loading } from 'ionic-angular';
 
 import { LogoutPage } from '../logout/logout';
 import { ReviewObjectPage } from '../reviewobject/reviewobject';
@@ -16,8 +16,9 @@ import { UserProvider } from '../../providers/user/user';
 export class OpenMyGiftPage {
 
   gift: any;
+  loading: Loading;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, private alertCtrl: AlertController, private userProvider: UserProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, private alertCtrl: AlertController, private userProvider: UserProvider, public loadingCtrl: LoadingController) {
     this.gift = navParams.get('gift');
   }
 
@@ -30,6 +31,30 @@ export class OpenMyGiftPage {
       } else {
         this.gift = existingGift;
       }
+
+      if (this.gift.status.received == false) {
+        this.loading = this.loadingCtrl.create({
+          content: 'Letting ' + this.gift.post_author_data.nickname + ' know that you have received this gift ...',
+          duration: 10000
+        });
+        this.loading.present();
+        this.userProvider.receivedGift(this.gift.ID).subscribe(complete => {
+          if (complete) {
+            this.gift.status.received = true;
+            this.userProvider.updateMyGifts().subscribe(done => {
+              this.userProvider.setUnopenedGift(this.gift.ID, this.gift);
+              this.loading.dismissAll();
+            });
+          } else {
+            this.loading.dismissAll();
+            this.showError();
+          }
+        },
+        error => {        
+          this.loading.dismissAll();
+          this.showError();
+        });
+      }
     });
   }
 
@@ -39,6 +64,41 @@ export class OpenMyGiftPage {
     } else {
       return false;
     }
+  }
+
+  ionViewWillLeave () {
+    if (this.allComplete()) {
+      this.loading = this.loadingCtrl.create({
+        content: 'Letting ' + this.gift.post_author_data.nickname + ' know that you have unwrapped this gift ...',
+        duration: 10000
+      });
+      this.loading.present();
+      this.userProvider.unwrappedGift(this.gift.ID).subscribe(complete => {
+        if (complete) {
+          this.userProvider.clearUnopenedGift(this.gift.ID).then(cleared => {
+            this.userProvider.updateMyGifts().subscribe(done => {
+              this.loading.dismissAll();
+            });
+          });
+        } else {
+          this.loading.dismissAll();
+          this.showError();
+        }
+      },
+      error => {        
+        this.loading.dismissAll();
+        this.showError();
+      });
+    }
+  }
+
+  showError() {
+    let alert = this.alertCtrl.create({
+      title: 'Gift update unsuccessful',
+      subTitle: 'The message to ' + this.gift.post_author_data.nickname + ' will be delayed',
+      buttons: ['OK']
+    });
+    alert.present(prompt);
   }
 
   logout () {
@@ -84,6 +144,20 @@ export class OpenMyGiftPage {
     });
     
     modal.present();
+  }
+
+  allComplete (): boolean {
+    for (let i = 0; i < this.gift.wraps.length; i++) {
+      if (!(!!this.gift.wraps[i].unwrap_object && this.gift.wraps[i].unwrap_object.found == true)) {
+        return false;
+      }
+    }
+    for (let i = 0; i < this.gift.payloads.length; i++) {
+      if (!(this.gift.payloads[i].post_content.length > 0 && this.gift.payloads[i].seen == true)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   partComplete (part) {

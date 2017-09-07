@@ -8,6 +8,7 @@ import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { FilePath } from '@ionic-native/file-path';
+import { Shake } from '@ionic-native/shake';
 
 import { IntroPage } from '../pages/intro/intro';
 import { LoginPage } from '../pages/login/login';
@@ -112,7 +113,8 @@ import { FCM } from '@ionic-native/fcm';
     Camera,
     File,
     FileTransfer,
-    FilePath
+    FilePath,
+    Shake
   ]
 })
 export class AppModule {}
