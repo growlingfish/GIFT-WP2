@@ -44,6 +44,7 @@ export class OpenMyGiftPage {
             this.userProvider.updateMyGifts().subscribe(done => {
               this.userProvider.setUnopenedGift(this.gift.ID, this.gift);
               this.loading.dismissAll();
+              // need to refresh the mygifts page!
             });
           } else {
             this.loading.dismissAll();
@@ -63,32 +64,6 @@ export class OpenMyGiftPage {
       return true;
     } else {
       return false;
-    }
-  }
-
-  ionViewWillLeave () {
-    if (this.allComplete()) {
-      this.loading = this.loadingCtrl.create({
-        content: 'Letting ' + this.gift.post_author_data.nickname + ' know that you have unwrapped this gift ...',
-        duration: 10000
-      });
-      this.loading.present();
-      this.userProvider.unwrappedGift(this.gift.ID).subscribe(complete => {
-        if (complete) {
-          this.userProvider.clearUnopenedGift(this.gift.ID).then(cleared => {
-            this.userProvider.updateMyGifts().subscribe(done => {
-              this.loading.dismissAll();
-            });
-          });
-        } else {
-          this.loading.dismissAll();
-          this.showError();
-        }
-      },
-      error => {        
-        this.loading.dismissAll();
-        this.showError();
-      });
     }
   }
 
@@ -140,7 +115,31 @@ export class OpenMyGiftPage {
 
     modal.onDidDismiss(data => {
       this.gift.payloads[part].seen = true;
-      this.userProvider.setUnopenedGift(this.gift.ID, this.gift);
+      this.userProvider.setUnopenedGift(this.gift.ID, this.gift).then(data => {
+        if (this.allComplete()) {
+          this.loading = this.loadingCtrl.create({
+            content: 'Letting ' + this.gift.post_author_data.nickname + ' know that you have unwrapped this gift ...',
+            duration: 10000
+          });
+          this.loading.present();
+          this.userProvider.unwrappedGift(this.gift.ID).subscribe(complete => {
+            if (complete) {
+              this.userProvider.clearUnopenedGift(this.gift.ID).then(cleared => {
+                this.userProvider.updateMyGifts().subscribe(done => {
+                  this.loading.dismissAll();
+                });
+              });
+            } else {
+              this.loading.dismissAll();
+              this.showError();
+            }
+          },
+          error => {        
+            this.loading.dismissAll();
+            this.showError();
+          });
+        }
+      });
     });
     
     modal.present();

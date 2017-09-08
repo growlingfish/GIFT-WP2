@@ -18,8 +18,7 @@
   
   <ion-list inset>
 
-    <ion-item-divider color="light" *ngIf="true">Unopened</ion-item-divider>
-
+    <ion-item-divider color="light" *ngIf="giftsUnopened().length > 0">Unopened</ion-item-divider>
 
     <ion-item *ngFor="let gift of giftsUnopened()" (click)="open(gift)">
       <ion-icon name="arrow-dropright-circle" item-start color="secondary"></ion-icon>
@@ -28,7 +27,7 @@
       <button ion-button clear item-end>Open</button>
     </ion-item>
 
-    <ion-item-divider color="light" *ngIf="true">Opened</ion-item-divider>
+    <ion-item-divider color="light" *ngIf="giftsOpened().length > 0">Opened</ion-item-divider>
 
     <ion-item *ngFor="let gift of giftsOpened()" (click)="review(gift)">
       <ion-icon name="arrow-dropright-circle" item-start></ion-icon>

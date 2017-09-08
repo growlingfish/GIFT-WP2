@@ -26,6 +26,7 @@ export class LoginPage {
       if (data == null) {
         // not already logged in, fine
       } else {
+        this.userProvider.initialiseData();
         this.navCtrl.setRoot(LogoutPage);
       }
     });

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { NavController, NavParams, ViewController, Platform } from 'ionic-angular';
 
 import { Shake } from '@ionic-native/shake';
@@ -13,7 +13,7 @@ export class OpenMessagePage {
   private revealed: boolean;
   private watch;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private platform: Platform, private shake: Shake) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private platform: Platform, private shake: Shake, private zone: NgZone) {
     this.message = navParams.get('message');
     this.revealed = false;
   }
@@ -22,7 +22,9 @@ export class OpenMessagePage {
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
         this.watch = this.shake.startWatch().subscribe(() => {
-          this.revealed = true;
+          this.zone.run(() => {
+            this.revealed = true;
+          });
         });
       } else {
         this.revealed = true;

@@ -60,6 +60,7 @@ export class MyGiftsPage {
         return item.status.unwrapped == true;
       });
     }
+    return [];
   }
 
   giftsUnopened () {
@@ -68,5 +69,6 @@ export class MyGiftsPage {
         return item.status.unwrapped == false;
       });
     }
+    return [];
   }
 }

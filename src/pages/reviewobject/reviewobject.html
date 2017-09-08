@@ -14,6 +14,7 @@
       <ion-card-title>
         {{object.post_title}}
       </ion-card-title>
+      <p *ngIf="!!object.location && object.location.length == 1 && !!object.location[0].post_title"><em [innerHTML]="object.location[0].post_title"></em></p>
       <p [innerHTML]="object.post_content"></p>
     </ion-card-content>
   </ion-card>

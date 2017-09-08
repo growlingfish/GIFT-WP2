@@ -126,77 +126,37 @@ export class UserProvider {
           .subscribe(data => {
             if (typeof data.success !== 'undefined' && data.success) {
               this.setUser(data.user).then(data => {
-                this.updateTheirGifts().subscribe(complete => {
-                  if (complete) {
-                    console.log("Succeeded getting sent gifts");
-                  } else {
-                    console.log("Failed getting sent gifts");
-                  }
-                },
-                error => {
-                  console.log("Failed getting sent gifts");
-                });
-
-                this.updateMyGifts().subscribe(complete => {
-                  if (complete) {
-                    console.log("Succeeded getting received gifts");
-                  } else {
-                    console.log("Failed getting received gifts");
-                  }
-                },
-                error => {
-                  console.log("Failed getting received gifts");
-                });
-
-                this.updateContacts().subscribe(complete => {
-                  if (complete) {
-                    console.log("Succeeded getting contacts");
-                  } else {
-                    console.log("Failed getting contacts");
-                  }
-                },
-                error => {
-                  console.log("Failed getting contacts");
-                });
-
-                this.updateObjects().subscribe(complete => {
-                  if (complete) {
-                    console.log("Succeeded getting objects");
-                  } else {
-                    console.log("Failed getting objects");
-                  }
-                },
-                error => {
-                  console.log("Failed getting objects");
-                });
-
-                this.updateLocations().subscribe(complete => {
-                  if (complete) {
-                    console.log("Succeeded getting locations");
-                  } else {
-                    console.log("Failed getting locations");
-                  }
-                },
-                error => {
-                  console.log("Failed getting locations");
-                });
+                this.initialiseData();
 
                 //https://github.com/fechanique/cordova-plugin-fcm
                 //https://console.firebase.google.com/project/gift-eu-1491403324909/notification
                 this.platform.ready().then(() => {
                   if (this.platform.is('cordova')) {
                     this.fcm.getToken().then(token => {
-                      this.setFCMToken(token).then(token => {
-                        console.log("New token " + token);
-                      });
+                      console.log("New token " + token);
+                      this.setFCMToken(token);
                     }, error => {
+                      console.log("FCM getToken failed ...");
                       console.log(error);
                     });
 
                     this.fcm.onTokenRefresh().subscribe(token => {
-                      this.setFCMToken(token).then(token => {
-                        console.log("Refreshed token " + token);
-                      });
+                      console.log("Refreshed token " + token);
+                      this.setFCMToken(token);
+                    }, error => {
+                      console.log("FCM getToken failed ...");
+                    });
+
+                    this.fcm.subscribeToTopic('topicExample');
+
+                    this.fcm.onNotification().subscribe(data => {
+                      if (data.wasTapped) {
+                        //Notification was received on device tray and tapped by the user.
+                        alert( JSON.stringify(data) );
+                      } else {
+                        //Notification was received in foreground. Maybe the user needs to be notified.
+                        alert( JSON.stringify(data) );
+                      }
                     });
                   }
                 });
@@ -216,8 +176,71 @@ export class UserProvider {
       });
     }
   }
+
+  public initialiseData () {
+    this.updateTheirGifts().subscribe(complete => {
+      if (complete) {
+        console.log("Succeeded getting sent gifts");
+      } else {
+        console.log("Failed getting sent gifts");
+      }
+    },
+    error => {
+      console.log("Failed getting sent gifts");
+    });
+
+    this.updateMyGifts().subscribe(complete => {
+      if (complete) {
+        console.log("Succeeded getting received gifts");
+      } else {
+        console.log("Failed getting received gifts");
+      }
+    },
+    error => {
+      console.log("Failed getting received gifts");
+    });
+
+    this.updateContacts().subscribe(complete => {
+      if (complete) {
+        console.log("Succeeded getting contacts");
+      } else {
+        console.log("Failed getting contacts");
+      }
+    },
+    error => {
+      console.log("Failed getting contacts");
+    });
+
+    this.updateObjects().subscribe(complete => {
+      if (complete) {
+        console.log("Succeeded getting objects");
+      } else {
+        console.log("Failed getting objects");
+      }
+    },
+    error => {
+      console.log("Failed getting objects");
+    });
+
+    this.updateLocations().subscribe(complete => {
+      if (complete) {
+        console.log("Succeeded getting locations");
+      } else {
+        console.log("Failed getting locations");
+      }
+    },
+    error => {
+      console.log("Failed getting locations");
+    });
+  }
  
   public logout (): Promise<null> {
+    this.platform.ready().then(() => {
+      if (this.platform.is('cordova')) {
+        this.fcm.unsubscribeFromTopic('topicExample');
+      }
+    });
+
     return this.storage.ready().then(() => this.storage.clear());
   }
 
