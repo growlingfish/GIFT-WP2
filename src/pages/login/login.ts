@@ -27,6 +27,7 @@ export class LoginPage {
         // not already logged in, fine
       } else {
         this.userProvider.initialiseData();
+        this.userProvider.initialiseFCM();
         this.navCtrl.setRoot(LogoutPage);
       }
     });
@@ -62,7 +63,7 @@ export class LoginPage {
       subTitle: text,
       buttons: ['OK']
     });
-    alert.present(prompt);
+    alert.present();
   }
 
   register () {

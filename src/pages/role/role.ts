@@ -3,8 +3,6 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
 import { TabsPage } from '../tabs/tabs';
-import { NewGiftPage } from '../newgift/newgift';
-import { MyGiftsPage } from '../mygifts/mygifts';
 
 import { UserProvider } from '../../providers/user/user';
 
@@ -19,16 +17,18 @@ export class RolePage {
   }
 
   makeGift () {
-    this.navCtrl.setRoot(TabsPage);
-    this.navCtrl.push(NewGiftPage);
+    this.navCtrl.setRoot(TabsPage, {
+      tab: 0
+    });
   }
 
   unwrapGift () {
-    this.navCtrl.setRoot(TabsPage);
-    this.navCtrl.push(MyGiftsPage);
+    this.navCtrl.setRoot(TabsPage, {
+      tab: 1
+    });
   }
 
-  ionViewWillEnter () {
+  ionViewDidEnter () {
     this.userProvider.getUser().then(data => {
       if (data == null) {
         this.navCtrl.setRoot(LoginPage);

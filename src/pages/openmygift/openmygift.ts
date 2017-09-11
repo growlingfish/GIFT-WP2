@@ -44,7 +44,6 @@ export class OpenMyGiftPage {
             this.userProvider.updateMyGifts().subscribe(done => {
               this.userProvider.setUnopenedGift(this.gift.ID, this.gift);
               this.loading.dismissAll();
-              // need to refresh the mygifts page!
             });
           } else {
             this.loading.dismissAll();

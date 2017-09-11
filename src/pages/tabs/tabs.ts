@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { TheirGiftsPage } from '../theirgifts/theirgifts';
 import { MyGiftsPage } from '../mygifts/mygifts';
@@ -18,8 +18,10 @@ export class TabsPage {
   unwrapRoot = MyGiftsPage;
   activityRoot = ActivityPage;
 
-  constructor(public navCtrl: NavController, private userProvider: UserProvider) {
+  selectedTab: number;
 
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider) {
+    this.selectedTab = navParams.get('tab') || 0;
   }
 
   ionViewWillEnter () {
@@ -31,7 +33,9 @@ export class TabsPage {
         this.userProvider.getSeenRoles().then(hasSeen => {
           if (!hasSeen) {
             this.navCtrl.setRoot(RolePage);
-          }
+          }/* else if (this.selectedTab != null) {
+            this.navCtrl.getActiveChildNav().select(this.selectedTab);
+          }*/
         });
       }
     });

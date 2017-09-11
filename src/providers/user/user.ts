@@ -3,7 +3,9 @@ import { Observable } from 'rxjs/Observable';
 import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
-import { Platform } from 'ionic-angular';
+import { Platform, AlertController, App, LoadingController, Loading } from 'ionic-angular';
+
+import { TabsPage } from '../../pages/tabs/tabs';
 
 import { GlobalVarProvider } from '../global-var/global-var';
 import { FCM } from '@ionic-native/fcm';
@@ -11,7 +13,7 @@ import { FCM } from '@ionic-native/fcm';
 @Injectable()
 export class UserProvider {
 
-  constructor(public http: Http, private storage: Storage, private globalVar: GlobalVarProvider, private platform: Platform, private fcm: FCM) {
+  constructor(public http: Http, private storage: Storage, private globalVar: GlobalVarProvider, private platform: Platform, private fcm: FCM, private alertCtrl: AlertController, public appCtrl: App, public loadingCtrl: LoadingController) {
   }
 
   public getSeenIntro (): Promise<boolean> {
@@ -127,40 +129,7 @@ export class UserProvider {
             if (typeof data.success !== 'undefined' && data.success) {
               this.setUser(data.user).then(data => {
                 this.initialiseData();
-
-                //https://github.com/fechanique/cordova-plugin-fcm
-                //https://console.firebase.google.com/project/gift-eu-1491403324909/notification
-                this.platform.ready().then(() => {
-                  if (this.platform.is('cordova')) {
-                    this.fcm.getToken().then(token => {
-                      console.log("New token " + token);
-                      this.setFCMToken(token);
-                    }, error => {
-                      console.log("FCM getToken failed ...");
-                      console.log(error);
-                    });
-
-                    this.fcm.onTokenRefresh().subscribe(token => {
-                      console.log("Refreshed token " + token);
-                      this.setFCMToken(token);
-                    }, error => {
-                      console.log("FCM getToken failed ...");
-                    });
-
-                    this.fcm.subscribeToTopic('topicExample');
-
-                    this.fcm.onNotification().subscribe(data => {
-                      if (data.wasTapped) {
-                        //Notification was received on device tray and tapped by the user.
-                        alert( JSON.stringify(data) );
-                      } else {
-                        //Notification was received in foreground. Maybe the user needs to be notified.
-                        alert( JSON.stringify(data) );
-                      }
-                    });
-                  }
-                });
-
+                this.initialiseFCM();
                 observer.next(true);
                 observer.complete();
               });
@@ -175,6 +144,95 @@ export class UserProvider {
           });
       });
     }
+  }
+
+  public initialiseFCM () {
+    //https://github.com/fechanique/cordova-plugin-fcm
+    //https://console.firebase.google.com/project/gift-eu-1491403324909/notification
+    this.platform.ready().then(() => {
+      if (this.platform.is('cordova')) {
+        this.fcm.getToken().then(token => {
+          console.log("New token " + token);
+          this.setFCMToken(token);
+        }, error => {
+          console.log("FCM getToken failed ...");
+          console.log(error);
+        });
+
+        this.fcm.onTokenRefresh().subscribe(token => {
+          console.log("Refreshed token " + token);
+          this.setFCMToken(token);
+        }, error => {
+          console.log("FCM getToken failed ...");
+        });
+
+        this.fcm.subscribeToTopic('giftGlobal');
+        this.fcm.subscribeToTopic('giftDeliveries');
+
+        this.fcm.onNotification().subscribe(data => {
+          if (data.wasTapped) { //Notification was received in notification tray (app is in background)
+            
+          } else { //Notification was received when app is in foreground
+          
+          }
+          switch (data.topic) {
+            case 'giftGlobal':
+              let alert = this.alertCtrl.create({
+                title: data.title,
+                subTitle: data.body,
+                buttons: ['OK']
+              });
+              alert.present();
+              break;
+            case 'giftDeliveries':
+              this.getUser().then(user => {
+                if (user == null) {
+                  // not logged in; no deliveries for me
+                } else {
+                  if (user.ID == data.recipientID) {
+                    let alert = this.alertCtrl.create({
+                      title: "You've received a gift!",
+                      message: 'Would you like to see your gifts now?',
+                      buttons: [
+                        {
+                          text: 'Yes',
+                          handler: () => {
+                            let navTransition = alert.dismiss();
+                            navTransition.then(() => {
+                              let loading = this.loadingCtrl.create({
+                                content: 'Checking for new gifts ...',
+                                duration: 10000
+                              });
+                              loading.present().then(()=>{
+                                this.updateMyGifts().subscribe(done => {
+                                  this.appCtrl.getRootNav().setRoot(TabsPage, {
+                                    tab: 1
+                                  });
+                                  loading.dismissAll();
+                                });
+                              });
+                            });
+                            return false;
+                          }
+                        },
+                        {
+                          text: 'No, thanks',
+                          role: 'cancel'
+                        }
+                      ]
+                    });
+                    alert.present();
+                  }
+                }
+              });
+              break;
+            default:
+              console.log(data);
+              break;
+          }
+        });
+      }
+    });
   }
 
   public initialiseData () {
