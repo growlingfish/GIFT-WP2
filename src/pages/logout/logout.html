@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Log out</ion-title>
+    <ion-title>Log Out</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -13,7 +13,7 @@
     <ion-row>
       <ion-col>
         <p>Are you sure you want to log out?</p>
-        <p>If you log out, any gifts that you have started making but have not sent will be discarded.</p>
+        <p *ngIf="unfinished">When you log out, the Gift that you have started making but that you have not sent will be discarded.</p>
       </ion-col>
     </ion-row>
 
@@ -25,7 +25,8 @@
 
     <ion-row>
       <ion-col class="cancel-col">
-        <button ion-button color="danger" (click)="cancel()">Cancel</button>
+        <button ion-button color="danger" (click)="cancel()" *ngIf="!unfinished">Cancel</button>
+        <button ion-button color="danger" (click)="review()" *ngIf="unfinished">Return to Incomplete Gift</button>
       </ion-col>
     </ion-row>
 

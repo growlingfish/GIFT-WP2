@@ -269,7 +269,7 @@ export class NewObjectPage {
         subTitle: "You haven't finished making the object yet",
         buttons: ['OK']
       });
-      alert.present(prompt);
+      alert.present();
     }
   }
 
@@ -279,7 +279,7 @@ export class NewObjectPage {
       subTitle: "Please try again",
       buttons: ['OK']
     });
-    alert.present(prompt);
+    alert.present();
   }
 
 }

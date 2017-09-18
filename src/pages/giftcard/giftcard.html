@@ -1,31 +1,30 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Write Your Message</ion-title>
+    <ion-title>Giftcard</ion-title>
 
     <ion-buttons end>
-        <button ion-button icon-only (click)="logout()">
-          <ion-icon name="log-out"></ion-icon>
-        </button>
-      </ion-buttons>
+      <button ion-button icon-only (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
-  
-  <ion-grid>
 
+  <ion-grid>
+      
     <ion-row>
       <ion-col>
-        <p>What would you like to tell the recipient about this object?</p>
-        <p>Why did you choose it for them?</p>
+        <p>This is a personal message for your recipient that you would usually write in say a greetings card to go with a gift.</p>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-textarea placeholder="Your message" name="message" [(ngModel)]="message" required></ion-textarea>
+        <ion-textarea placeholder="Hi Sally I've made a little something for you, I hope you like it treasure x" name="message" [(ngModel)]="message" required></ion-textarea>
       </ion-col>
     </ion-row>
 

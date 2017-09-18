@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, NavParams, Slides } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
 
@@ -11,7 +11,11 @@ import { UserProvider } from '../../providers/user/user';
 })
 export class IntroPage {
 
+  @ViewChild(Slides) slides: Slides;
+  currentIndex: number;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider: UserProvider) {
+    this.currentIndex = 0;
   }
 
   ionViewWillEnter() {
@@ -29,6 +33,10 @@ export class IntroPage {
 
   ionViewDidLeave () {
     this.userProvider.setSeenIntro(true);
+  }
+
+  slideChanged() {
+    this.currentIndex = this.slides.getActiveIndex();
   }
 
 }

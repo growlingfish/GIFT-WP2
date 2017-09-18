@@ -1,27 +1,21 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Choose a task</ion-title>
+    <ion-title>Make a Gift/Unwrap a Gift</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
 
-  <ion-card>
+  <ion-card (click)="makeGift()">
     <img src="http://via.placeholder.com/500x300/666666/666666"/>
     <div class="card-title">Make a gift</div>
-    <div class="card-subtitle">
-      <button ion-button (click)="makeGift()">Start making</button>
-    </div>
   </ion-card>
 
-  <ion-card>
+  <ion-card (click)="unwrapGift()">
     <img src="http://via.placeholder.com/500x300/666666/666666"/>
     <div class="card-title">Unwrap a gift</div>
-    <div class="card-subtitle">
-      <button ion-button (click)="unwrapGift()">Start unwrapping</button>
-    </div>
   </ion-card>
 
 </ion-content>

@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Choose a recipient</ion-title>
+    <ion-title>Choose a Recipient</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="logout()">
@@ -21,11 +21,11 @@
       <ion-avatar item-start>
         <img src="http://via.placeholder.com/32x32">
       </ion-avatar>
-      A new recipient
+      Add a New Recipient
       <button ion-button clear item-end>Create</button>
     </ion-item>
 
-    <ion-item-divider color="light">Registered recipients</ion-item-divider>
+    <ion-item-divider color="light">Already Registered recipients</ion-item-divider>
 
     <ion-item *ngFor="let contact of contacts" (click)="invite(contact)">
       <ion-avatar item-start>

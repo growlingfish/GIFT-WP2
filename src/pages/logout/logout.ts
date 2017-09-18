@@ -3,6 +3,7 @@ import { NavController, NavParams, App } from 'ionic-angular';
 
 import { IntroPage } from '../intro/intro';
 import { TabsPage } from '../tabs/tabs';
+import { NewGiftPage } from '../newgift/newgift';
 
 import { UserProvider } from '../../providers/user/user';
 
@@ -12,14 +13,24 @@ import { UserProvider } from '../../providers/user/user';
 })
 export class LogoutPage {
 
+  unfinished: boolean;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, private app: App) {
+    this.unfinished = false;
   }
 
   ionViewWillEnter () {
-    var user = this.userProvider.getUser();
-    user.then(data => {
+    this.userProvider.getUser().then(data => {
       if (data == null) {
         this.cancel();
+      }
+    });
+
+    this.userProvider.getUnfinishedGift().then(existingGift => {
+      if (existingGift == null) {
+        this.unfinished = false;
+      } else {
+        this.unfinished = true;
       }
     });
   }
@@ -28,6 +39,11 @@ export class LogoutPage {
     this.userProvider.logout().then(data => {
       this.app.getRootNav().setRoot(IntroPage);
     });
+  }
+
+  review () {
+    this.cancel();
+    this.app.getRootNav().push(NewGiftPage);
   }
 
   cancel () {

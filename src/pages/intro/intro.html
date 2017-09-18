@@ -8,27 +8,32 @@
 
 <ion-content>
   <ion-fab top right edge>
-      <button ion-fab color="light" (click)="skipIntro()">SKIP</button>
+      <button ion-fab color="light" (click)="skipIntro()" [disabled]="currentIndex == 2">SKIP</button>
   </ion-fab>
 
-  <ion-slides pager>
+  <ion-slides pager (ionSlideDidChange)="slideChanged()">
     
       <ion-slide>
         <img src="http://via.placeholder.com/800x400" class="slide-image"/>
-        <h2 class="slide-title">Slide 1</h2>
-        <p>Text 1</p>
+        <h2 class="slide-title">Introduction to Gift</h2>
+        <p>Gift is a little something you can make especially for someone else to be experienced in Brighton Museum & Art Gallery or that you can receive and unwrap, which has been made especially for you to experience in Brighton Museum & Art Gallery.</p>
+      </ion-slide>
+    
+      <ion-slide>
+        <h2 class="slide-title">Introduction to Gift</h2>
+        <p>A gift has three parts:</p>
+        <ul>
+          <li><strong>The Start</strong> - the first thing that you want the person who is receiving the Gift to see. This might have popped out at you for them when you walked around the Museum or you searched a while for to give the experience a suitable beginning.</li>
+          <li><strong>The Middle</strong> - this is the centre or heart of the Gift, the filling of a sandwich. This could build from the previous part or not.</li>
+          <li><strong>The End</strong> - this is where you want to conclude the Gift, for your person to leave the experience in the Museum in the right frame of mind or mood.</li>
+        </ul>
+        <p>And in each part there are three tasks you need to make or unwrap in order to complete the Gift - <strong>A Photo</strong> (of the object in the Museum you would like to visit), <strong>Some Thoughts</strong> (on what it is about this object that connects it to them) and <strong>A Location</strong> (so that they can find it quite easily).</p>
       </ion-slide>
     
       <ion-slide>
         <img src="http://via.placeholder.com/800x400" class="slide-image"/>
-        <h2 class="slide-title">Slide 2</h2>
-        <p>Text 2</p>
-      </ion-slide>
-    
-      <ion-slide>
-        <img src="http://via.placeholder.com/800x400" class="slide-image"/>
-        <h2 class="slide-title">Slide 3</h2>
-        <p>Text 3</p>
+        <h2 class="slide-title">Introduction to Gift</h2>
+        <p>So when you are ready to start, login and decide if you would like to <strong>Make a Gift</strong> for someone or <strong>Unwrap a Gift</strong> that someone has made for you.</p>
         <button ion-button (click)="skipIntro()">Continue</button>
       </ion-slide>
     

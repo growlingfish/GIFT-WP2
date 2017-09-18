@@ -5,6 +5,7 @@ import { LogoutPage } from '../logout/logout';
 import { ContactsPage } from '../contacts/contacts';
 import { NewMessagePage } from '../newmessage/newmessage';
 import { ObjectsPage } from '../objects/objects';
+import { GiftcardPage } from '../giftcard/giftcard';
 
 import { UserProvider } from '../../providers/user/user';
 
@@ -30,20 +31,20 @@ export class NewGiftPage {
     this.userProvider.getUnfinishedGift().then(existingGift => {
       if (existingGift == null) {
         let alert = this.alertCtrl.create({
-          title: "Creating a gift",
-          subTitle: "You can add the components of a gift in any order you like, and can leave this screen or the app without losing your progress",
+          title: "Creating a Gift",
+          subTitle: "You can add the components of a Gift in any order you like, and can leave this screen or the app without losing your progress",
           buttons: [
             {
               text: 'OK'
             }
           ]
         });
-        alert.present(prompt);
+        alert.present();
 
         this.userProvider.getUser().then(data => {
           this.gift = {
             "post_author": data.ID,
-            "post_title": "Tap to name this gift",
+            "post_title": "",
             "post_status": "draft",
             "recipient": {},
             "wraps": [
@@ -82,7 +83,6 @@ export class NewGiftPage {
             ],
             "giftcards": [
               {
-                "post_title": "",
                 "post_content": "",
                 "post_status": "draft"
               }
@@ -110,8 +110,10 @@ export class NewGiftPage {
         {
           text: 'Save',
           handler: data => {
-            this.gift.post_title = data.title;
-            this.userProvider.setUnfinishedGift(this.gift);
+            if (data.title.length > 0) {
+              this.gift.post_title = data.title;
+              this.userProvider.setUnfinishedGift(this.gift);
+            }
           }
         },
         {
@@ -127,34 +129,7 @@ export class NewGiftPage {
   }
 
   editGiftcard () {
-    let prompt = this.alertCtrl.create({
-      title: 'Giftcard',
-      message: "This is the introduction for the experience. Enter a title and a message.",
-      inputs: [
-        {
-          name: 'title',
-          placeholder: 'Welcome to your gift'
-        },
-        {
-          name: 'content',
-          placeholder: 'I hope you like it - good luck'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Save',
-          handler: data => {
-            this.gift.giftcards[0].post_title = data.title;
-            this.gift.giftcards[0].post_content = data.content;
-            this.userProvider.setUnfinishedGift(this.gift);
-          }
-        },
-        {
-          text: 'Cancel'
-        }
-      ]
-    });
-    prompt.present();
+    this.navCtrl.push(GiftcardPage);
   }
 
   send () {
@@ -167,8 +142,10 @@ export class NewGiftPage {
       this.userProvider.sendGift().subscribe(complete => {
         if (complete) {
           this.userProvider.clearUnfinishedGift().then(cleared => {
-            this.loading.dismissAll();
-            this.navCtrl.pop();
+            this.userProvider.updateTheirGifts().subscribe(done => {
+              this.loading.dismissAll();
+              this.navCtrl.pop();
+            });
           });
         } else {
           this.loading.dismissAll();
@@ -185,7 +162,7 @@ export class NewGiftPage {
         subTitle: "You haven't finished making the gift yet",
         buttons: ['OK']
       });
-      alert.present(prompt);
+      alert.present();
     }
   }
 
@@ -195,7 +172,7 @@ export class NewGiftPage {
       subTitle: "Please try again",
       buttons: ['OK']
     });
-    alert.present(prompt);
+    alert.present();
   }
 
   isComplete (): boolean {
@@ -232,8 +209,10 @@ export class NewGiftPage {
             text: 'Save',
             handler: () => {
               this.userProvider.setUnfinishedGift(this.gift).then(data => {
-                this.edited = false;
-                this.navCtrl.pop();
+                this.userProvider.updateTheirGifts().subscribe(done => {
+                  this.edited = false;
+                  this.navCtrl.pop();
+                });
               });
             }
           },
@@ -241,14 +220,16 @@ export class NewGiftPage {
             text: 'Discard',
             handler: () => {
               this.userProvider.clearUnfinishedGift().then(data => {
-                this.edited = false;
-                this.navCtrl.pop();
+                this.userProvider.updateTheirGifts().subscribe(done => {
+                  this.edited = false;
+                  this.navCtrl.pop();
+                });
               });
             }
           }
         ]
       });
-      alert.present(prompt);
+      alert.present();
       return false;
     }
   }
@@ -277,7 +258,7 @@ export class NewGiftPage {
     if (!!this.gift.recipient && !!this.gift.recipient.nickname) {
       return "To " + this.gift.recipient.nickname;
     } else {
-      return "Tap to add a recipient";
+      return "Tap to add a recipient of your Gift";
     }
   }
 
@@ -289,8 +270,40 @@ export class NewGiftPage {
     }
   }
 
+  titleIcon (): string {
+    if (!!this.gift.post_title && this.gift.post_title.length > 0) {
+      return "checkmark-circle";
+    } else {
+      return "add-circle";
+    }
+  }
+
+  titleIconColour (): string {
+    if (!!this.gift.post_title && this.gift.post_title.length > 0) {
+      return "secondary";
+    } else {
+      return "danger";
+    }
+  }
+
+  titleTitle (): string {
+    if (!!this.gift.post_title && this.gift.post_title.length > 0) {
+      return this.gift.post_title;
+    } else {
+      return "Tap to name this Gift";
+    }
+  }
+
+  titleSubtitle (): string {
+    if (!!this.gift.post_title && this.gift.post_title.length > 0) {
+      return "Tap to change the name";
+    } else {
+      return "What title will you choose?";
+    }
+  }
+
   giftcardIcon (): string {
-    if (!!this.gift.giftcards && !!this.gift.giftcards[0] && !!this.gift.giftcards[0].post_title && !!this.gift.giftcards[0].post_content) {
+    if (!!this.gift.giftcards && !!this.gift.giftcards[0] && !!this.gift.giftcards[0].post_content) {
       return "checkmark-circle";
     } else {
       return "add-circle";
@@ -298,7 +311,7 @@ export class NewGiftPage {
   }
 
   giftcardIconColour (): string {
-    if (!!this.gift.giftcards && !!this.gift.giftcards[0] && !!this.gift.giftcards[0].post_title && !!this.gift.giftcards[0].post_content) {
+    if (!!this.gift.giftcards && !!this.gift.giftcards[0] && !!this.gift.giftcards[0].post_content) {
       return "secondary";
     } else {
       return "danger";
@@ -306,8 +319,8 @@ export class NewGiftPage {
   }
 
   giftcardTitle (): string {
-    if (!!this.gift.giftcards && !!this.gift.giftcards[0] && !!this.gift.giftcards[0].post_title) {
-      return this.gift.giftcards[0].post_title;
+    if (!!this.gift.giftcards && !!this.gift.giftcards[0] && !!this.gift.giftcards[0].post_content) {
+      return "Tap to change the giftcard";
     } else {
       return "Tap to add a giftcard";
     }
@@ -323,8 +336,10 @@ export class NewGiftPage {
 
   scrapGift () {
     this.userProvider.clearUnfinishedGift().then(data => {
-      this.edited = false;
-      this.navCtrl.pop();
+      this.userProvider.updateTheirGifts().subscribe(done => {
+        this.edited = false;
+        this.navCtrl.pop();
+      });
     });
   }
 
@@ -349,11 +364,11 @@ export class NewGiftPage {
   partCompleteInfo (part) {
     if (!this.partComplete (part)) {
       let alert = this.alertCtrl.create({
-        title: "This part is not complete",
-        subTitle: "You haven't finished making the part yet",
+        title: "This Part Is Not Complete",
+        subTitle: "You haven't finished making this part of the Gift yet",
         buttons: ['OK']
       });
-      alert.present(prompt);
+      alert.present();
     }
   }
 

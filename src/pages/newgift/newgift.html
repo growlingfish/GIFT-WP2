@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title (click)="editTitle()">{{gift.post_title}} <ion-icon name="arrow-dropdown-circle"></ion-icon></ion-title>
+    <ion-title>Make a Gift</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="logout()">
@@ -41,7 +41,7 @@
   <ion-grid class="build">
     <ion-row>
       <ion-col>
-        <h2>Build the experience</h2>
+        <h2>Make a Gift</h2>
         <p>What will the experience contain?</p>
       </ion-col>
     </ion-row>
@@ -50,7 +50,7 @@
   <ion-grid class="parts">
     <ion-row *ngFor="let part of [0,1,2]">
       <ion-col col-4 class="component-1 {{partComplete(part) ? 'complete' : 'incomplete'}}" (click)="partCompleteInfo(part)">
-        <h2>Part {{part + 1}}</h2>
+        <h2>{{part == 0 ? 'Start' : part == 1 ? 'Middle' : 'End'}}</h2>
         <p>{{partComplete(part) ? 'Complete' : 'Incomplete'}}</p>
       </ion-col>
       <ion-col col-4 class="component-2 {{objectComplete(part) ? 'complete' : 'incomplete'}}" (click)="editObject(part)">
@@ -64,20 +64,32 @@
     </ion-row>
   </ion-grid>
 
+  <ion-grid class="post_title">
+    <ion-row (click)="editTitle()">
+      <ion-col col-3 class="post_title-icon">
+        <ion-icon [name]="titleIcon()" [color]="titleIconColour()"></ion-icon>
+      </ion-col>
+      <ion-col col-9>
+        <h2 [innerHTML]="titleTitle()"></h2>
+        <p [innerHTML]="titleSubtitle()"></p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
   <ion-grid class="send">
     <ion-row>
       <ion-col>
-        <p>Are you happy with the experience?</p>
+        <p>Are you happy with the Gift?</p>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <button ion-button block (click)="send()">Send gift</button>
+        <button ion-button block (click)="send()">Send Gift</button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <button ion-button color="danger" (click)="scrapGift()">Scrap this gift</button>
+        <button ion-button color="danger" (click)="scrapGift()">Start Over Again</button>
       </ion-col>
     </ion-row>
   </ion-grid>

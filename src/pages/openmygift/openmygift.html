@@ -42,7 +42,7 @@
     <ng-container *ngFor="let part of [0,1,2]">
       <ion-row *ngIf="!!this.gift.wraps[part] && !!this.gift.wraps[part].unwrap_object && !!this.gift.wraps[part].unwrap_object.ID && !!this.gift.payloads[part] && !!this.gift.payloads[part].post_content">
         <ion-col col-4 class="component-1 {{partComplete(part) ? 'complete' : 'incomplete'}}" (click)="partCompleteInfo(part)">
-          <h2>Part {{part + 1}}</h2>
+          <h2>{{part == 0 ? 'Start' : part == 1 ? 'Middle' : 'End'}}</h2>
           <p>{{partComplete(part) ? 'Found' : 'Not found'}}</p>
         </ion-col>
         <ion-col col-4 class="component-2 {{objectComplete(part) ? 'complete' : 'incomplete'}}" (click)="canOpenObject(part) ? (objectComplete(part) ? viewObject(part) : openObject(part)) : objectInfo(part)">

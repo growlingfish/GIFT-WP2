@@ -34,6 +34,7 @@ import { ReviewObjectPage } from '../pages/reviewobject/reviewobject';
 import { OpenMyGiftPage } from '../pages/openmygift/openmygift';
 import { OpenMessagePage } from '../pages/openmessage/openmessage';
 import { OpenObjectPage } from '../pages/openobject/openobject';
+import { GiftcardPage } from '../pages/giftcard/giftcard';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -67,7 +68,8 @@ import { FCM } from '@ionic-native/fcm';
     ReviewObjectPage,
     OpenMyGiftPage,
     OpenMessagePage,
-    OpenObjectPage
+    OpenObjectPage,
+    GiftcardPage
   ],
   imports: [
     BrowserModule,
@@ -101,7 +103,8 @@ import { FCM } from '@ionic-native/fcm';
     ReviewObjectPage,
     OpenMyGiftPage,
     OpenMessagePage,
-    OpenObjectPage
+    OpenObjectPage,
+    GiftcardPage
   ],
   providers: [
     StatusBar,

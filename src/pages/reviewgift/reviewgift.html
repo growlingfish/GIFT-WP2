@@ -32,7 +32,6 @@
         <ion-icon name="create"></ion-icon>
       </ion-col>
       <ion-col col-9>
-        <h2>{{gift.giftcards[0].post_title}}</h2>
         <p [innerHTML]="gift.giftcards[0].post_content"></p>
       </ion-col>
     </ion-row>
@@ -42,7 +41,7 @@
     <ng-container *ngFor="let part of [0,1,2]">
       <ion-row *ngIf="!!this.gift.wraps[part] && !!this.gift.wraps[part].unwrap_object && !!this.gift.wraps[part].unwrap_object.ID && !!this.gift.payloads[part] && !!this.gift.payloads[part].post_content">
         <ion-col class="part-1">
-          <h2>Part {{part + 1}}</h2>
+          <h2>{{part == 0 ? 'Start' : part == 1 ? 'Middle' : 'End'}}</h2>
         </ion-col>
         <ion-col class="part-2" (click)="viewObject(part)">
           <h2><ion-icon name="image"></ion-icon></h2>

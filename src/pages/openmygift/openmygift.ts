@@ -72,7 +72,7 @@ export class OpenMyGiftPage {
       subTitle: 'The message to ' + this.gift.post_author_data.nickname + ' will be delayed',
       buttons: ['OK']
     });
-    alert.present(prompt);
+    alert.present();
   }
 
   logout () {
