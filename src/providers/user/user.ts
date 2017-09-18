@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
-import { Platform, AlertController, App, LoadingController, Loading } from 'ionic-angular';
+import { Platform, AlertController, App, LoadingController } from 'ionic-angular';
 
 import { TabsPage } from '../../pages/tabs/tabs';
 
@@ -168,6 +168,7 @@ export class UserProvider {
 
         this.fcm.subscribeToTopic('giftGlobal');
         this.fcm.subscribeToTopic('giftDeliveries');
+        this.fcm.subscribeToTopic('giftStatus');
 
         this.fcm.onNotification().subscribe(data => {
           if (data.wasTapped) { //Notification was received in notification tray (app is in background)
@@ -220,6 +221,22 @@ export class UserProvider {
                           role: 'cancel'
                         }
                       ]
+                    });
+                    alert.present();
+                  }
+                }
+              });
+              break;
+            case 'giftStatus':
+              this.getUser().then(user => {
+                if (user == null) {
+                  // not logged in; no status updates for me
+                } else {
+                  if (user.ID == data.senderID) {
+                    let alert = this.alertCtrl.create({
+                      title: data.title,
+                      message: data.body,
+                      buttons: ['OK']
                     });
                     alert.present();
                   }
@@ -527,7 +544,7 @@ export class UserProvider {
     return Observable.create(observer => {
       this.getUser().then(data => {
         this.getUnopenedGift(giftId).then(gift => {
-          this.http.get(this.globalVar.getUnwrappedURL(giftId))
+          this.http.get(this.globalVar.getUnwrappedURL(giftId, data.ID))
             .map(response => response.json())
             .subscribe(data => {
               if (typeof data.success !== 'undefined' && data.success) {
@@ -551,7 +568,7 @@ export class UserProvider {
     return Observable.create(observer => {
       this.getUser().then(data => {
         this.getUnopenedGift(giftId).then(gift => {
-          this.http.get(this.globalVar.getReceivedURL(giftId))
+          this.http.get(this.globalVar.getReceivedURL(giftId, data.ID))
             .map(response => response.json())
             .subscribe(data => {
               if (typeof data.success !== 'undefined' && data.success) {
@@ -560,7 +577,7 @@ export class UserProvider {
               } else {
                 observer.next(false);
                 observer.complete();
-              }
+              } 
             },
             function (error) {
               observer.next(false);

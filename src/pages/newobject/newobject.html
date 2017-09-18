@@ -30,7 +30,7 @@
 
   <h2>Name</h2>
   <p>What do you call this object?</p>
-  <ion-input placeholder="Tap here to give it a name" name="title" [(ngModel)]="object.post_title" required></ion-input>
+  <ion-input autocomplete="true" spellcheck="true" placeholder="Tap here to give it a name" name="title" [(ngModel)]="object.post_title" required></ion-input>
 
   <h2>Location</h2>
   <p>If the recipient cannot find the object, they will be able to ask the app to reveal the location. Choose the most appropriate location from the list.</p>
@@ -43,7 +43,7 @@
 
   <h2>Directions</h2>
   <p>Tell the recipient how they should find the object.</p>
-  <ion-textarea placeholder="Tap here to add directions" name="directions" [(ngModel)]="object.post_content" required></ion-textarea>
+  <ion-textarea autocomplete="true" spellcheck="true" placeholder="Tap here to add directions" name="directions" [(ngModel)]="object.post_content" required></ion-textarea>
 
   <ion-grid class="add">
     <ion-row>
