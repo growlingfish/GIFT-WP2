@@ -9,21 +9,16 @@
 <ion-content padding>
 
   <ion-grid>
-      
-    <ion-row>
-      <ion-col>
+    <ion-row justify-content-center align-items-center>
+      <div class="outer">
         <ion-card>
           <ion-card-content [innerHTML]="this.message"></ion-card-content>
         </ion-card>
-      </ion-col>
+        <div class="buttons">
+          <button ion-button block (click)="dismiss()">Back</button>
+        </div>
+      </div>
     </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <button ion-button block (click)="dismiss()">Back</button>
-      </ion-col>
-    </ion-row>
-
   </ion-grid>
 
 </ion-content>
