@@ -1,5 +1,9 @@
 page-newgift {
 
+    p, h2 {
+        color: white;
+    }
+
     .recipient {
 
         padding: 40px 0 20px 0;
@@ -17,21 +21,12 @@ page-newgift {
         text-align: center;
     }
 
-    .post_title {
-        
-        padding: 40px 0 20px 0;
-
-        .post_title-icon {
-            text-align: right;
-            font-size: 50px;
-            padding-right: 20px;
-        }
-
-    }
-
     .parts {
         text-align: center;
-        color: white;
+
+        p {
+            color: black;
+        }
 
         ion-row {
             padding: 2px 0;
@@ -50,11 +45,11 @@ page-newgift {
         }
 
         .component-1.complete {
-            background: green;
+            background: rgb(255, 220, 75);
         }
 
         .component-1.incomplete {
-            background: red;
+            background: rgb(75, 195, 220);
         }
 
         .component-2 {
@@ -62,11 +57,11 @@ page-newgift {
         }
 
         .component-2.complete {
-            background: green;
+            background: rgb(255, 220, 75);
         }
 
         .component-2.incomplete {
-            background: red;
+            background: rgb(75, 195, 220);
         }
 
         .component-3 {
@@ -74,11 +69,11 @@ page-newgift {
         }
 
         .component-3.complete {
-            background: green;
+            background: rgb(255, 220, 75);
         }
 
         .component-3.incomplete {
-            background: red;
+            background: rgb(75, 195, 220);
         }
     }
 

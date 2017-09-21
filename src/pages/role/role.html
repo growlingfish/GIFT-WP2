@@ -8,14 +8,21 @@
 
 <ion-content padding>
 
-  <ion-card (click)="makeGift()">
-    <img src="http://via.placeholder.com/500x300/666666/666666"/>
-    <div class="card-title">Make a gift</div>
-  </ion-card>
-
-  <ion-card (click)="unwrapGift()">
-    <img src="http://via.placeholder.com/500x300/666666/666666"/>
-    <div class="card-title">Unwrap a gift</div>
-  </ion-card>
+  <ion-grid>
+    <ion-row justify-content-center align-items-center>
+      <div>
+        <ion-card (click)="makeGift()">
+            <img src="./assets/make.jpg"/>
+            <div class="card-title">Make a gift</div>
+          </ion-card>
+        
+          <ion-card (click)="unwrapGift()">
+            <img src="./assets/unwrap.jpg"/>
+            <div class="card-title">Unwrap a gift</div>
+          </ion-card>
+      </div>
+    </ion-row>
+  </ion-grid>
+  
 
 </ion-content>

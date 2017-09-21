@@ -7,37 +7,35 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-grid>
+    <ion-row justify-content-center align-items-center>
+      <div class="outer">
+        <form (ngSubmit)="login()" #loginForm="ngForm">
+        
+          <ion-list inset>
 
-  <form (ngSubmit)="login()" #loginForm="ngForm">
-    <ion-row>
-      <ion-col>
-        <ion-list inset>
+            <ion-item>
+              <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="username" required></ion-input>
+            </ion-item>
 
-          <ion-item>
-            <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="username" required></ion-input>
-          </ion-item>
+            <ion-item>
+              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="password" required></ion-input>
+            </ion-item>
 
-          <ion-item>
-            <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="password" required></ion-input>
-          </ion-item>
+          </ion-list>
 
-        </ion-list>
-      </ion-col>
-    </ion-row>
+          <div>
+            <button ion-button class="submit-btn" block type="submit" [disabled]="!loginForm.form.valid">Login</button>
+          </div>
 
-    <ion-row>
-      <ion-col class="signup-col">
-        <button ion-button class="submit-btn" block type="submit" [disabled]="!loginForm.form.valid">Login</button>
-      </ion-col>
-    </ion-row>
+        </form>
 
-  </form>
-
-  <ion-row>
-    <ion-col class="register-col">
-      <p>Don't have a username?</p>
-      <button ion-button class="submit-btn" (click)="register()">Register</button>
-    </ion-col>
+      <div class="register">
+        <p>Don't have a username?</p>
+        <button ion-button color="secondary" (click)="register()">Register</button>
+      </div>
+    </div>
   </ion-row>
+</ion-grid>
 
 </ion-content>

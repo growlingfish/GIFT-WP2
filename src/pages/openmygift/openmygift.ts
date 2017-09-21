@@ -93,7 +93,10 @@ export class OpenMyGiftPage {
 
   openObject (part) {
     let modal = this.modalCtrl.create(OpenObjectPage, {
-      object: this.gift.wraps[part].unwrap_object
+      object: this.gift.wraps[part].unwrap_object,
+      part: part
+    }, {
+      enableBackdropDismiss: false
     });
 
     modal.onDidDismiss(data => {
@@ -116,27 +119,29 @@ export class OpenMyGiftPage {
       this.gift.payloads[part].seen = true;
       this.userProvider.setUnopenedGift(this.gift.ID, this.gift).then(data => {
         if (this.allComplete()) {
-          this.loading = this.loadingCtrl.create({
-            content: 'Letting ' + this.gift.post_author_data.nickname + ' know that you have unwrapped this gift ...',
-            duration: 10000
-          });
-          this.loading.present();
-          this.userProvider.unwrappedGift(this.gift.ID).subscribe(complete => {
-            if (complete) {
-              this.userProvider.clearUnopenedGift(this.gift.ID).then(cleared => {
-                this.userProvider.updateMyGifts().subscribe(done => {
-                  this.loading.dismissAll();
+          if (this.gift.ID != 10000000) { // free gift is 10000000
+            this.loading = this.loadingCtrl.create({
+              content: 'Letting ' + this.gift.post_author_data.nickname + ' know that you have unwrapped this gift ...',
+              duration: 10000
+            });
+            this.loading.present();
+            this.userProvider.unwrappedGift(this.gift.ID).subscribe(complete => {
+              if (complete) {
+                this.userProvider.clearUnopenedGift(this.gift.ID).then(cleared => {
+                  this.userProvider.updateMyGifts().subscribe(done => {
+                    this.loading.dismissAll();
+                  });
                 });
-              });
-            } else {
+              } else {
+                this.loading.dismissAll();
+                this.showError();
+              }
+            },
+            error => {        
               this.loading.dismissAll();
               this.showError();
-            }
-          },
-          error => {        
-            this.loading.dismissAll();
-            this.showError();
-          });
+            });
+          }
         }
       });
     });
@@ -203,7 +208,7 @@ export class OpenMyGiftPage {
         subTitle: "You need to find the object and open the message to finish this part",
         buttons: ['OK']
       });
-      alert.present(prompt);
+      alert.present();
     }
   }
 
@@ -214,7 +219,7 @@ export class OpenMyGiftPage {
         subTitle: "You need to finish opening the previous part first",
         buttons: ['OK']
       });
-      alert.present(prompt);
+      alert.present();
     }
   }
 
@@ -225,7 +230,7 @@ export class OpenMyGiftPage {
         subTitle: "You need to find the object before you can open this message",
         buttons: ['OK']
       });
-      alert.present(prompt);
+      alert.present();
     }
   }
 

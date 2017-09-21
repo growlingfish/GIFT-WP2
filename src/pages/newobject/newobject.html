@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Create new object</ion-title>
+    <ion-title>Create New Object</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="logout()">
@@ -23,27 +23,39 @@
       </ion-col>
       <ion-col col-9>
         <h2 [innerHTML]="photoTitle()"></h2>
-        <p>Choose a photo that will help the recipient find the object</p>
+        <p>This can be a new photo or one from your photo gallery that allows your recipient to find the object in the museum</p>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <h2>Name</h2>
-  <p>What do you call this object?</p>
-  <ion-input autocomplete="true" spellcheck="true" placeholder="Tap here to give it a name" name="title" [(ngModel)]="object.post_title" required></ion-input>
+  <ion-card>
+    <ion-card-header>Name</ion-card-header>
+    <ion-card-content>
+      <p>What do you call this object?</p>
+      <ion-input autocomplete="true" spellcheck="true" placeholder="Tap here to give it a name" name="title" [(ngModel)]="object.post_title" required></ion-input>
+    </ion-card-content>
+  </ion-card>
 
-  <h2>Location</h2>
-  <p>If the recipient cannot find the object, they will be able to ask the app to reveal the location. Choose the most appropriate location from the list.</p>
-  <ion-item>
-    <ion-label>Tap here to choose</ion-label>
-    <ion-select [(ngModel)]="object.location" multiple="false" [selectOptions]="selectOptions">
-      <ion-option *ngFor="let l of locations" [value]="l">{{l.post_title}}</ion-option>
-    </ion-select>
-  </ion-item>
+  <ion-card>
+    <ion-card-header>Location</ion-card-header>
+    <ion-card-content>
+      <p>If the recipient cannot find the object, they will be able to ask the app to reveal the location. Choose the most appropriate location from the list.</p>
+      <ion-item>
+        <ion-label>Tap here to choose</ion-label>
+        <ion-select [(ngModel)]="object.location" multiple="false" [selectOptions]="selectOptions">
+          <ion-option *ngFor="let l of locations" [value]="l">{{l.post_title}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
 
-  <h2>Directions</h2>
-  <p>Tell the recipient how they should find the object.</p>
-  <ion-textarea autocomplete="true" spellcheck="true" placeholder="Tap here to add directions" name="directions" [(ngModel)]="object.post_content" required></ion-textarea>
+  <ion-card>
+    <ion-card-header>More On The Location</ion-card-header>
+    <ion-card-content>
+      <p>This is an extra bit of information about where the object is, e.g. "next to the big red lips".</p>
+      <ion-textarea autocomplete="true" spellcheck="true" placeholder="Tap here to add directions" name="directions" [(ngModel)]="object.post_content" required></ion-textarea>
+    </ion-card-content>
+  </ion-card>
 
   <ion-grid class="add">
     <ion-row>
@@ -53,7 +65,7 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <button ion-button color="danger" (click)="scrapObject()">Scrap this object</button>
+        <button ion-button color="danger" (click)="scrapObject()">Start Again</button>
       </ion-col>
     </ion-row>
   </ion-grid>

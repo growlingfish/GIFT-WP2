@@ -14,3 +14,57 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+@mixin alpha-background-color($color, $background) {
+    $percent: alpha($color) * 100%;
+    $opaque: opacify($color, 1);
+    $solid-color: mix($opaque, $background, $percent);
+    background-color: $solid-color;
+    background-color: $color;
+}
+
+ion-content {
+    background: url('../assets/background.jpg');
+    background-size: cover;
+}
+
+ion-slide {
+    @include alpha-background-color(rgba(white, 0.7), white);
+    padding: 40px;
+}
+
+.toolbar-background {
+    background: rgb(255, 220, 75);
+    border-bottom: 5px solid white;
+}
+
+.swiper-pagination-bullet-active {
+    background: rgb(75, 195, 220) !important;
+}
+
+ion-alert {
+    .alert-button {
+        color: black !important;
+    }
+}
+
+.tabs {
+    background: black;
+
+    .tabbar {
+        background: rgb(75, 195, 220);
+        border-top: 5px solid white;
+
+        .tab-button[aria-selected=true] {
+            color: white;
+
+            .tab-button-icon {
+                color: white;
+            }
+        }
+    }
+}
+
+ion-searchbar {
+    margin-bottom: 16px;
+}

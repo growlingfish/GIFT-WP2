@@ -16,13 +16,13 @@
 
   <ion-searchbar (ionInput)="filterObjects($event)"></ion-searchbar>
 
-  <ion-list inset>
+  <ion-list>
     <ion-item (click)="addNew()">
       <ion-avatar item-start>
         <img src="http://via.placeholder.com/32x32">
       </ion-avatar>
       A new object
-      <button ion-button clear item-end>Create</button>
+      <button ion-button clear item-end color="secondary">Create</button>
     </ion-item>
 
     <ion-item-divider color="light">Existing objects</ion-item-divider>
@@ -32,8 +32,9 @@
         <ion-avatar item-start (click)="viewExisting(object)">
           <img [src]="object.post_image">
         </ion-avatar>
-        <span (click)="viewExisting(object)">{{object.post_title}}</span>
-        <button ion-button clear item-end (click)="addExisting(object)">{{buttonAction}}</button>
+        <h2><span (click)="viewExisting(object)">{{object.post_title}}</span></h2>
+        <p *ngIf="!!object.location">In the {{object.location[0].post_title}}</p>
+        <button ion-button clear item-end (click)="addExisting(object)" color="secondary">{{buttonAction}}</button>
       </ion-item>
     </ng-container>
   </ion-list>

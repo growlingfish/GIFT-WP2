@@ -44,7 +44,7 @@ export class NewGiftPage {
         this.userProvider.getUser().then(data => {
           this.gift = {
             "post_author": data.ID,
-            "post_title": "",
+            "post_title": "A new gift",
             "post_status": "draft",
             "recipient": {},
             "wraps": [
@@ -96,34 +96,6 @@ export class NewGiftPage {
     });
   }
 
-  editTitle () {
-    let prompt = this.alertCtrl.create({
-      title: 'Title',
-      message: "Enter a title for this gift",
-      inputs: [
-        {
-          name: 'title',
-          placeholder: 'A new gift'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Save',
-          handler: data => {
-            if (data.title.length > 0) {
-              this.gift.post_title = data.title;
-              this.userProvider.setUnfinishedGift(this.gift);
-            }
-          }
-        },
-        {
-          text: 'Cancel'
-        }
-      ]
-    });
-    prompt.present();
-  }
-
   editRecipient () {
     this.navCtrl.push(ContactsPage);
   }
@@ -139,6 +111,11 @@ export class NewGiftPage {
         duration: 10000
       });
       this.loading.present();
+
+      if (!!this.gift.recipient && !!this.gift.recipient.nickname) {
+        this.gift.post_title = "A Gift For " + this.gift.recipient.nickname;
+      }
+
       this.userProvider.sendGift().subscribe(complete => {
         if (complete) {
           this.userProvider.clearUnfinishedGift().then(cleared => {
@@ -159,7 +136,7 @@ export class NewGiftPage {
     } else {
       let alert = this.alertCtrl.create({
         title: "Gift not complete",
-        subTitle: "You haven't finished making the gift yet",
+        subTitle: "You haven't finished making the Gift yet",
         buttons: ['OK']
       });
       alert.present();
@@ -176,9 +153,6 @@ export class NewGiftPage {
   }
 
   isComplete (): boolean {
-    if (!(!!this.gift.post_title && (this.gift.post_title != "A new gift" || this.gift.post_title != "Tap to name this gift"))) {
-      return false;
-    }
     if (!(!!this.gift.recipient && !!this.gift.recipient.ID)) {
       return false;
     }
@@ -187,7 +161,7 @@ export class NewGiftPage {
         return false;
       }
     }
-    if (!(!!this.gift.giftcards && !!this.gift.giftcards[0] && !!this.gift.giftcards[0].post_title && !!this.gift.giftcards[0].post_content)) {
+    if (!(!!this.gift.giftcards && !!this.gift.giftcards[0] && !!this.gift.giftcards[0].post_content)) {
       return false;
     }
     return true;
@@ -248,9 +222,9 @@ export class NewGiftPage {
 
   recipientIconColour (): string {
     if (!!this.gift.recipient && !!this.gift.recipient.ID) {
-      return "secondary";
+      return "primary";
     } else {
-      return "danger";
+      return "secondary";
     }
   }
 
@@ -258,7 +232,7 @@ export class NewGiftPage {
     if (!!this.gift.recipient && !!this.gift.recipient.nickname) {
       return "To " + this.gift.recipient.nickname;
     } else {
-      return "Tap to add a recipient of your Gift";
+      return "Who is your Gift for?";
     }
   }
 
@@ -266,39 +240,7 @@ export class NewGiftPage {
     if (!!this.gift.recipient && !!this.gift.recipient.ID) {
       return "Tap to choose a different recipient";
     } else {
-      return "Who will you give this to?";
-    }
-  }
-
-  titleIcon (): string {
-    if (!!this.gift.post_title && this.gift.post_title.length > 0) {
-      return "checkmark-circle";
-    } else {
-      return "add-circle";
-    }
-  }
-
-  titleIconColour (): string {
-    if (!!this.gift.post_title && this.gift.post_title.length > 0) {
-      return "secondary";
-    } else {
-      return "danger";
-    }
-  }
-
-  titleTitle (): string {
-    if (!!this.gift.post_title && this.gift.post_title.length > 0) {
-      return this.gift.post_title;
-    } else {
-      return "Tap to name this Gift";
-    }
-  }
-
-  titleSubtitle (): string {
-    if (!!this.gift.post_title && this.gift.post_title.length > 0) {
-      return "Tap to change the name";
-    } else {
-      return "What title will you choose?";
+      return "Tap to add a recipient of your Gift";
     }
   }
 
@@ -312,9 +254,9 @@ export class NewGiftPage {
 
   giftcardIconColour (): string {
     if (!!this.gift.giftcards && !!this.gift.giftcards[0] && !!this.gift.giftcards[0].post_content) {
-      return "secondary";
+      return "primary";
     } else {
-      return "danger";
+      return "secondary";
     }
   }
 
@@ -322,7 +264,7 @@ export class NewGiftPage {
     if (!!this.gift.giftcards && !!this.gift.giftcards[0] && !!this.gift.giftcards[0].post_content) {
       return "Tap to change the giftcard";
     } else {
-      return "Tap to add a giftcard";
+      return "How would you introduce the Gift?";
     }
   }
 
@@ -330,7 +272,7 @@ export class NewGiftPage {
     if (!!this.gift.giftcards && !!this.gift.giftcards[0] && !!this.gift.giftcards[0].post_content) {
       return this.gift.giftcards[0].post_content;
     } else {
-      return "How would you introduce the experience?";
+      return "Tap to write them a giftcard";
     }
   }
 

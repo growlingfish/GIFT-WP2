@@ -9,27 +9,21 @@
 <ion-content padding>
 
   <ion-grid>
-
-    <ion-row>
-      <ion-col>
+    <ion-row justify-content-center align-items-center>
+      <div class="outer">
         <p>Are you sure you want to log out?</p>
         <p *ngIf="unfinished">When you log out, the Gift that you have started making but that you have not sent will be discarded.</p>
-      </ion-col>
+      
+        <div class="buttons">
+          <div>
+            <button ion-button block (click)="logout()">Log out</button>
+          </div>
+          <div>
+            <button ion-button color="danger" (click)="cancel()" *ngIf="!unfinished">Cancel</button>
+            <button ion-button color="danger" (click)="review()" *ngIf="unfinished">Return to Incomplete Gift</button>
+          </div>
+        </div>
+      </div>
     </ion-row>
-
-    <ion-row>
-      <ion-col class="logout-col">
-        <button ion-button block (click)="logout()">Log out</button>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col class="cancel-col">
-        <button ion-button color="danger" (click)="cancel()" *ngIf="!unfinished">Cancel</button>
-        <button ion-button color="danger" (click)="review()" *ngIf="unfinished">Return to Incomplete Gift</button>
-      </ion-col>
-    </ion-row>
-
   </ion-grid>
-
 </ion-content>

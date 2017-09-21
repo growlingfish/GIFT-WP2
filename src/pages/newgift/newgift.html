@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Make a Gift</ion-title>
+    <ion-title>{{!!this.gift.recipient && !!this.gift.recipient.nickname ? "A Gift For " + this.gift.recipient.nickname : "Make a Gift"}}</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="logout()">
@@ -41,7 +41,7 @@
   <ion-grid class="build">
     <ion-row>
       <ion-col>
-        <h2>Make a Gift</h2>
+        <h2>Make a Gift Experience</h2>
         <p>What will the experience contain?</p>
       </ion-col>
     </ion-row>
@@ -60,18 +60,6 @@
       <ion-col col-4 class="component-3 {{payloadComplete(part) ? 'complete' : 'incomplete'}}" (click)="editMessage(part)">
         <h2><ion-icon name="quote"></ion-icon></h2>
         <p>{{payloadComplete(part) ? this.gift.payloads[part].post_content.substring(0,10) + '...' : 'Tap to add a message'}}</p>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-grid class="post_title">
-    <ion-row (click)="editTitle()">
-      <ion-col col-3 class="post_title-icon">
-        <ion-icon [name]="titleIcon()" [color]="titleIconColour()"></ion-icon>
-      </ion-col>
-      <ion-col col-9>
-        <h2 [innerHTML]="titleTitle()"></h2>
-        <p [innerHTML]="titleSubtitle()"></p>
       </ion-col>
     </ion-row>
   </ion-grid>

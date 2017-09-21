@@ -32,6 +32,14 @@ export class UserProvider {
     return this.storage.ready().then(() => this.storage.set('seenRoles', val));
   }
 
+  public getSeenFreeGift (): Promise<boolean> {
+    return this.storage.ready().then(() => this.storage.get('freeGift'));
+  }
+
+  public setSeenFreeGift (val: boolean) {
+    return this.storage.ready().then(() => this.storage.set('freeGift', val));
+  }
+
   public getFCMToken (): Promise<string> {
     return this.storage.ready().then(() => this.storage.get('fcmToken'));
   }
@@ -166,11 +174,26 @@ export class UserProvider {
           console.log("FCM getToken failed ...");
         });
 
-        this.fcm.subscribeToTopic('giftGlobal');
-        this.fcm.subscribeToTopic('giftDeliveries');
-        this.fcm.subscribeToTopic('giftStatus');
+        // For some reason FCM fails if we try to subscribe to multiple topics too quickly ...
+        setTimeout(function(){
+          console.log("Starting subscriptions ...");
+          
+          this.fcm.subscribeToTopic('giftGlobal');
+          console.log("Attempted to subscribe to giftGlobal");
 
+          setTimeout(function(){ 
+            this.fcm.subscribeToTopic('giftDeliveries');
+            console.log("Attempted to subscribe to giftDeliveries");
+
+            setTimeout(function(){ 
+              this.fcm.subscribeToTopic('giftStatus');
+              console.log("Attempted to subscribe to giftStatus");
+            }, 2000);
+          }, 2000);
+        }, 5000);
+        
         this.fcm.onNotification().subscribe(data => {
+          console.log(data);
           if (data.wasTapped) { //Notification was received in notification tray (app is in background)
             
           } else { //Notification was received when app is in foreground
@@ -312,7 +335,9 @@ export class UserProvider {
   public logout (): Promise<null> {
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
-        this.fcm.unsubscribeFromTopic('topicExample');
+        this.fcm.unsubscribeFromTopic('giftGlobal');
+        this.fcm.unsubscribeFromTopic('giftDeliveries');
+        this.fcm.unsubscribeFromTopic('giftStatus');
       }
     });
 

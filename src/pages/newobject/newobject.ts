@@ -213,9 +213,9 @@ export class NewObjectPage {
 
   photoTitle (): string {
     if (!!this.object && !!this.object.post_image) {
-      return "Tap to change the photo";
+      return "Tap To Change The Photo";
     } else {
-      return "Tap to add a photo";
+      return "Tap To Add A Photo";
     }
   }
 

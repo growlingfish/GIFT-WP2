@@ -2,6 +2,8 @@ page-newobject {
 
     .photo {
         
+        color: white;
+
         padding: 40px 0 20px 0;
 
         .photo-icon {
@@ -13,6 +15,18 @@ page-newobject {
 
     .add {
         text-align: center;
+    }
+
+    ion-textarea {
+        border: 1px dotted #CCCCCC;
+    }
+
+    ion-input {
+        border-bottom: 1px dotted #CCCCCC;
+    }
+
+    ion-card-header {
+        font-weight: bold;
     }
 
 }

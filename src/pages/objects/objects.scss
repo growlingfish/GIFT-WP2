@@ -1,3 +1,10 @@
 page-objects {
-
+    ion-list {
+        .item {
+            @include alpha-background-color(rgba(white, 0.9), white);
+        }
+        ion-item-divider.item {
+            background: #fff;
+        }
+    }
 }

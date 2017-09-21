@@ -14,30 +14,20 @@
 
 <ion-content padding>
   
-  <ion-grid>
+    <ion-grid>
+        <ion-row justify-content-center align-items-center>
+          <div class="outer">
 
-    <ion-row>
-      <ion-col>
         <p>What would you like to tell the recipient about this object?</p>
         <p>Why did you choose it for them?</p>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
+      
         <ion-textarea autocomplete="true" spellcheck="true" placeholder="Your message" name="message" [(ngModel)]="message" required></ion-textarea>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <button ion-button block (click)="addMessage()" [disabled]="message.length == 0">{{buttonAction}}</button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <button ion-button color="danger" (click)="cancel()">Cancel</button>
-      </ion-col>
+      
+        <div class="buttons">
+          <button ion-button block (click)="addMessage()" [disabled]="message.length == 0">{{buttonAction}}</button>
+          <button ion-button color="danger" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
     </ion-row>
 
   </ion-grid>

@@ -30,8 +30,9 @@ export class ReviewMyGiftPage {
   }
 
   viewObject (part) {
-    this.modalCtrl.create(ReviewObjectPage, {
-      object: this.gift.wraps[part].unwrap_object
+    this.modalCtrl.create(ReviewObjectPage, { 
+      object: this.gift.wraps[part].unwrap_object,
+      part: part
     }).present();
   }
 

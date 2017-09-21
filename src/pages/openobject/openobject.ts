@@ -8,9 +8,11 @@ import { NavController, NavParams, ViewController, AlertController } from 'ionic
 export class OpenObjectPage {
 
   private object: any;
+  private part: number;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public alertCtrl: AlertController) {
     this.object = navParams.get('object');
+    this.part = navParams.get('part');
   }
 
   found () {
@@ -32,7 +34,7 @@ export class OpenObjectPage {
       subTitle: "This object is in: " + this.object.location[0].post_title,
       buttons: ['OK']
     });
-    alert.present(prompt);
+    alert.present();
   }
 
 }
