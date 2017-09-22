@@ -152,6 +152,7 @@ export class OpenMyGiftPage {
   }
 
   respond() {
+    this.gift.status.responded = true;
     this.navCtrl.push(RespondPage, {
       giftID: this.gift.ID,
       owner: this.gift.post_author
