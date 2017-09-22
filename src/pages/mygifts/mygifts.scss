@@ -8,4 +8,25 @@ page-mygifts {
             background: #fff;
         }
     }
+
+    ion-card {
+        position: relative;
+        text-align: center;
+    }
+
+    .card-title {
+        position: absolute;
+        top: 41%;
+        font-size: 2.0em;
+        width: 100%;
+        font-weight: bold;
+        color: #fff;
+        @include alpha-background-color(rgba(black, 0.7), black);
+        padding: 2%;
+    }
+
+    .grid, .row {
+    // Force grid to fill height of content as this is not set by default
+        height: 100%;
+    }
 }

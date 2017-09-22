@@ -1,0 +1,29 @@
+<ion-header>
+  
+    <ion-navbar>
+      <ion-title>Write Your Response</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  <ion-content padding>
+    
+      <ion-grid>
+          <ion-row justify-content-center align-items-center>
+            <div class="outer">
+  
+          <p>What would you like to say about your Gift?</p>
+        
+          <ion-textarea autocomplete="true" spellcheck="true" placeholder="Your response" name="message" [(ngModel)]="message" required></ion-textarea>
+        
+          <div class="buttons">
+            <button ion-button block (click)="sendMessage()" [disabled]="message.length == 0">Send Response</button>
+            <button ion-button color="danger" (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+      </ion-row>
+  
+    </ion-grid>
+  
+  </ion-content>
+  

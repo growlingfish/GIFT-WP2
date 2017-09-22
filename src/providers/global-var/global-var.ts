@@ -83,10 +83,10 @@ export class GlobalVarProvider {
   getUnwrappedURL (giftId, receiverId) {
     return this.getApiBase() + "unwrapped/gift/" + giftId + "/" + receiverId;
   }
-/*
-  getRespondedURL (giftId) {
-    return this.getApiBase() + "responded/gift/" + giftId;
-  }*/
+
+  getResponseURL (giftId) {
+    return this.getApiBase() + "respond/gift/" + giftId;
+  }
 
   getDistance (lat1, lon1, lat2, lon2) {
     var p = 0.017453292519943295;

@@ -14,7 +14,7 @@
 
 <ion-content padding>
 
-  <ion-searchbar (ionInput)="filterGifts($event)"></ion-searchbar>
+  <ion-searchbar (ionInput)="filterGifts($event)" *ngIf="!!gifts && gifts.length > 1"></ion-searchbar>
 
   <ion-list>
 
@@ -33,7 +33,7 @@
       <button ion-button clear item-end color="secondary">Continue</button>
     </ion-item>
 
-    <ion-item-divider color="light">Already Made Gifts</ion-item-divider>
+    <ion-item-divider color="light" *ngIf="!!gifts && gifts.length > 0">Already Made Gifts</ion-item-divider>
 
     <ion-item *ngFor="let gift of gifts" (click)="review(gift)">
       <ion-icon name="arrow-dropright-circle" item-start></ion-icon>

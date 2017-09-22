@@ -14,10 +14,9 @@
 
 <ion-content padding>
 
-  <ion-searchbar (ionInput)="filterGifts($event)"></ion-searchbar>
+  <ion-searchbar (ionInput)="filterGifts($event)" *ngIf="(giftsUnopened().length + giftsOpened().length) > 1"></ion-searchbar>
   
   <ion-list>
-
     <ion-item-divider color="light" *ngIf="giftsUnopened().length > 0">Wrapped Gifts</ion-item-divider>
 
     <ion-item *ngFor="let gift of giftsUnopened()" (click)="open(gift)">
@@ -36,5 +35,16 @@
       <button ion-button clear item-end color="secondary">Review</button>
     </ion-item>
   </ion-list>
+
+  <ion-grid *ngIf="giftsUnopened().length == 0 && giftsOpened().length == 0">
+    <ion-row justify-content-center align-items-center>
+      <div>
+        <ion-card>
+          <img src="./assets/empty.jpg"/>
+          <div class="card-title">You Have No Gifts</div>
+        </ion-card>
+      </div>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

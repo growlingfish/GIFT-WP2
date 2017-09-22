@@ -6,6 +6,7 @@ import { ReviewObjectPage } from '../reviewobject/reviewobject';
 import { ReviewMessagePage } from '../reviewmessage/reviewmessage';
 import { OpenObjectPage } from '../openobject/openobject';
 import { OpenMessagePage } from '../openmessage/openmessage';
+import { RespondPage } from '../respond/respond';
 
 import { UserProvider } from '../../providers/user/user';
 
@@ -130,6 +131,7 @@ export class OpenMyGiftPage {
                 this.userProvider.clearUnopenedGift(this.gift.ID).then(cleared => {
                   this.userProvider.updateMyGifts().subscribe(done => {
                     this.loading.dismissAll();
+                    this.respond();
                   });
                 });
               } else {
@@ -147,6 +149,13 @@ export class OpenMyGiftPage {
     });
     
     modal.present();
+  }
+
+  respond() {
+    this.navCtrl.push(RespondPage, {
+      giftID: this.gift.ID,
+      owner: this.gift.post_author
+    });
   }
 
   allComplete (): boolean {

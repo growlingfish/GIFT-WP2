@@ -144,7 +144,7 @@ export class TabsPage {
         },
         {
           "ID": 10000005,
-          "post_content": "Next is the middle section of your expeeience. It is The Head of The King in the Egyptian Gallery. This is so far back in time it seems almost unreal and looks plastic, like an airbrushed photo of a face in a magazine. This was a way of saying I was here and it makes us think about how we do that now. Do you have a statue of you?"
+          "post_content": "Next is the middle section of your experience. It is The Head of The King in the Egyptian Gallery. This is so far back in time it seems almost unreal and looks plastic, like an airbrushed photo of a face in a magazine. This was a way of saying I was here and it makes us think about how we do that now. Do you have a statue of you?"
         },
         {
           "ID": 10000006,

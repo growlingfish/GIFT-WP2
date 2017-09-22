@@ -57,4 +57,17 @@
     </ng-container>
   </ion-grid>
 
+  <ion-grid class="respond" *ngIf="allComplete() && this.gift.status.responded == false">
+    <ion-row>
+      <ion-col>
+        <p>Now that you have experienced your Gift, would you like to respond to {{gift.post_author_data.nickname}}?</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button block (click)="respond()">Write a response</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>  

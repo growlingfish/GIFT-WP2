@@ -613,4 +613,28 @@ export class UserProvider {
     });
   }
 
+  sendResponse (giftId, response, sender, owner) {
+    return Observable.create(observer => {
+      let body = new URLSearchParams();
+      body.append('response', response);
+      body.append('sender', sender);
+      body.append('owner', owner);
+      this.http.post(this.globalVar.getResponseURL(giftId), body)
+        .map(response => response.json())
+        .subscribe(data => {
+          if (typeof data.success !== 'undefined' && data.success) {
+            observer.next(true);
+            observer.complete();
+          } else {
+            observer.next(false);
+            observer.complete();
+          }
+        },
+        function (error) {
+          observer.next(false);
+          observer.complete();
+        });
+    });
+  }
+
 }
