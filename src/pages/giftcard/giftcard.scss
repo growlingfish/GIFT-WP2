@@ -1,11 +1,26 @@
 page-giftcard {
 
-    ion-row {
+    iion-row {
         text-align: center;
-    } 
+    }
 
     ion-textarea {
         border: 1px dotted #CCCCCC;
+        @include alpha-background-color(rgba(white, 0.9), white);
+        height: 30vh;
+    }
+
+    .outer {
+        width: 80%;
+        padding-top: 20%;
+    }
+
+    p {
+        color: color($colors, light);
+    }
+
+    .buttons {
+        margin-top: 10%;
     }
 
 }
