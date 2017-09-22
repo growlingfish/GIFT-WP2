@@ -173,24 +173,15 @@ export class UserProvider {
         }, error => {
           console.log("FCM getToken failed ...");
         });
-
-        // For some reason FCM fails if we try to subscribe to multiple topics too quickly ...
-        setTimeout(function(){
-          console.log("Starting subscriptions ...");
           
-          this.fcm.subscribeToTopic('giftGlobal');
-          console.log("Attempted to subscribe to giftGlobal");
+        this.fcm.subscribeToTopic('giftGlobal');
+        console.log("Attempted to subscribe to giftGlobal");
 
-          setTimeout(function(){ 
-            this.fcm.subscribeToTopic('giftDeliveries');
-            console.log("Attempted to subscribe to giftDeliveries");
+        this.fcm.subscribeToTopic('giftDeliveries');
+        console.log("Attempted to subscribe to giftDeliveries");
 
-            setTimeout(function(){ 
-              this.fcm.subscribeToTopic('giftStatus');
-              console.log("Attempted to subscribe to giftStatus");
-            }, 2000);
-          }, 2000);
-        }, 5000);
+        this.fcm.subscribeToTopic('giftStatus');
+        console.log("Attempted to subscribe to giftStatus");
         
         this.fcm.onNotification().subscribe(data => {
           console.log(data);
