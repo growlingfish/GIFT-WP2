@@ -18,7 +18,9 @@ export class MyApp {
     platform.ready().then(() => {
       this.rootPage = userProvider.getSeenIntro() ? LoginPage : IntroPage;
       statusBar.styleDefault();
-      splashScreen.hide();
+      setTimeout(function () {
+        splashScreen.hide();
+      }, 1000);
     });
   }
 }

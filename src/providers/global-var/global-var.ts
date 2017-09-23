@@ -64,6 +64,10 @@ export class GlobalVarProvider {
     return this.getApiBase() + "locations/";
   }
 
+  getActivityURL (userId) {
+    return this.getApiBase() + "responses/" + userId;
+  }
+
   getObjectPhotoUploadURL () {
     return this.getApiBase() + "upload/object/";
   }

@@ -4,6 +4,7 @@ import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 
 import { LogoutPage } from '../logout/logout';
 
@@ -33,7 +34,7 @@ export class NewObjectPage {
     subTitle: 'Choose the most suitable location from this list'
   };
 
-  constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams, private globalVar: GlobalVarProvider, private userProvider: UserProvider, private alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, private camera: Camera, private filePath: FilePath, private file: File, public toastCtrl: ToastController, private transfer: FileTransfer, public loadingCtrl: LoadingController) {
+  constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams, private globalVar: GlobalVarProvider, private userProvider: UserProvider, private alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, private camera: Camera, private filePath: FilePath, private file: File, public toastCtrl: ToastController, private transfer: FileTransfer, public loadingCtrl: LoadingController, private imageResizer: ImageResizer) {
     this.part = navParams.get('part');
   }
 
@@ -108,12 +109,12 @@ export class NewObjectPage {
           .then(filePath => {
             let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
             let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-            this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+            this.copyFileToLocalDir(correctPath, currentName, this.createFileName(), sourceType);
           });
       } else {
         var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
         var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-        this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+        this.copyFileToLocalDir(correctPath, currentName, this.createFileName(), sourceType);
       }
     }, (err) => {
       this.showErrorToast('Error while selecting image');
@@ -129,9 +130,24 @@ export class NewObjectPage {
   }
   
   // Copy the image to a local folder
-  private copyFileToLocalDir (namePath, currentName, newFileName) {
+  private copyFileToLocalDir (namePath, currentName, newFileName, sourceType) {
     this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
       this.lastImage = newFileName;
+
+      if (sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
+        let options = {
+          uri: this.pathForImage(this.lastImage),
+          quality: 75,
+          width: 640,
+          height: 480
+         } as ImageResizerOptions;
+         
+         this.imageResizer
+           .resize(options)
+           .then((filePath: string) => this.lastImage = filePath)
+           .catch(e => console.log(e));
+      }
+
       this.uploadImage();
     }, error => {
       this.showErrorToast('Error while storing file.');
@@ -242,7 +258,7 @@ export class NewObjectPage {
         duration: 10000
       });
       this.loading.present();
-      this.userProvider.finaliseObject(this.object).subscribe(object => {
+      this.userProvider.finaliseObject(this.object, this.uploadedFilename).subscribe(object => {
         if (object) {
           this.userProvider.getUnfinishedGift().then(gift => {
             gift.wraps[this.part].unwrap_object = object;

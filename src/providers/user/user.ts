@@ -126,6 +126,14 @@ export class UserProvider {
     return this.storage.ready().then(() => this.storage.set('locations', val));
   }
 
+  public getActivity (): Promise<any> {
+    return this.storage.ready().then(() => this.storage.get('activity'));
+  }
+
+  public setActivity (val: any): Promise<any> {
+    return this.storage.ready().then(() => this.storage.set('activity', val));
+  }
+
   public login (username: string, password: string) {
     if (username === null || password === null) {
       return Observable.throw("Username or password missing");
@@ -232,7 +240,14 @@ export class UserProvider {
                         },
                         {
                           text: 'No, thanks',
-                          role: 'cancel'
+                          role: 'cancel',
+                          handler: () => {
+                            let navTransition = alert.dismiss();
+                            navTransition.then(() => {
+                                this.updateMyGifts();
+                            });
+                            return false;
+                          }
                         }
                       ]
                     });
@@ -246,7 +261,47 @@ export class UserProvider {
                 if (user == null) {
                   // not logged in; no status updates for me
                 } else {
-                  if (user.ID == data.senderID) {
+                  if (data.status == "responded" && data.owner == user.ID) {
+                    let alert = this.alertCtrl.create({
+                      title: data.title,
+                      message: 'Would you like to see your messages now?',
+                      buttons: [
+                        {
+                          text: 'Yes',
+                          handler: () => {
+                            let navTransition = alert.dismiss();
+                            navTransition.then(() => {
+                              let loading = this.loadingCtrl.create({
+                                content: 'Checking for new messages ...',
+                                duration: 10000
+                              });
+                              loading.present().then(()=>{
+                                this.updateActivity().subscribe(done => {
+                                  this.appCtrl.getRootNav().setRoot(TabsPage, {
+                                    tab: 2
+                                  });
+                                  loading.dismissAll();
+                                });
+                              });
+                            });
+                            return false;
+                          }
+                        },
+                        {
+                          text: 'No, thanks',
+                          role: 'cancel',
+                          handler: () => {
+                            let navTransition = alert.dismiss();
+                            navTransition.then(() => {
+                                this.updateActivity();
+                            });
+                            return false;
+                          }
+                        }
+                      ]
+                    });
+                    alert.present();
+                  } else if (data.status != "responded" && data.senderID == user.ID) {
                     let alert = this.alertCtrl.create({
                       title: data.title,
                       message: data.body,
@@ -320,6 +375,17 @@ export class UserProvider {
     },
     error => {
       console.log("Failed getting locations");
+    });
+
+    this.updateActivity().subscribe(complete => {
+      if (complete) {
+        console.log("Succeeded getting activity");
+      } else {
+        console.log("Failed getting activity");
+      }
+    },
+    error => {
+      console.log("Failed getting activity");
     });
   }
  
@@ -481,6 +547,30 @@ export class UserProvider {
     });
   }
 
+  updateActivity (): Observable<any> {
+    return Observable.create(observer => {
+      var user = this.getUser();
+      user.then(data => {
+        this.http.get(this.globalVar.getActivityURL(data.ID))
+          .map(response => response.json())
+          .subscribe(data => {
+            if (typeof data.success !== 'undefined' && data.success) {
+              this.setActivity(data.responses);
+              observer.next(true);
+              observer.complete();
+            } else {
+              observer.next(false);
+              observer.complete();
+            }
+          },
+          function (error) {
+            observer.next(false);
+            observer.complete();
+          });
+      });
+    });
+  }
+
   invite (email: string, name: string): Observable<any> {
     return Observable.create(observer => {
       this.getUser().then(data => {
@@ -503,12 +593,13 @@ export class UserProvider {
     });
   }
 
-  finaliseObject (object: any) {
+  finaliseObject (object: any, name: string) {
     return Observable.create(observer => {
       var user = this.getUser();
       user.then(data => {
         let body = new URLSearchParams();
         body.append('object', JSON.stringify(object));
+        body.append('name', name);
         body.append('owner', data.ID);
         this.http.post(this.globalVar.getFinaliseObjectURL(), body)
           .map(response => response.json())

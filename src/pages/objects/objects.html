@@ -32,8 +32,8 @@
         <ion-avatar item-start (click)="viewExisting(object)">
           <img [src]="object.post_image">
         </ion-avatar>
-        <h2><span (click)="viewExisting(object)">{{object.post_title}}</span></h2>
-        <p *ngIf="!!object.location">In the {{object.location[0].post_title}}</p>
+        <h2 (click)="viewExisting(object)">{{object.post_title}}</h2>
+        <p *ngIf="!!object.location" (click)="viewExisting(object)">In the {{object.location[0].post_title}}</p>
         <button ion-button clear item-end (click)="addExisting(object)" color="secondary">{{buttonAction}}</button>
       </ion-item>
     </ng-container>

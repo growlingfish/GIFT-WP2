@@ -14,4 +14,20 @@
 
 <ion-content padding>
 
+  <ng-container *ngFor="let response of responses">
+    <ion-card>
+      <ion-item>
+        <ion-avatar item-start>
+          <img [src]="response.post_author_data.avatar">
+        </ion-avatar>
+        <h2>{{response.post_author_data.nickname}}</h2>
+        <p>{{response.post_date}}</p>
+      </ion-item>
+
+      <ion-card-content>
+        {{response.post_content}}
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
 </ion-content>

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 
+import { TabsPage } from '../tabs/tabs';
+
 import { UserProvider } from '../../providers/user/user';
 
 @Component({
@@ -28,7 +30,7 @@ export class RespondPage {
     this.userProvider.getUser().then(data => {
       this.userProvider.sendResponse(this.giftID, this.message, data.ID, this.owner).subscribe(complete => {
         if (complete) {
-          this.navCtrl.pop();
+          this.navCtrl.setRoot(TabsPage);
         } else {
           this.showError();
         }
@@ -51,6 +53,6 @@ export class RespondPage {
   }
 
   cancel () {
-    this.navCtrl.pop();
+    this.navCtrl.setRoot(TabsPage);
   }
 }

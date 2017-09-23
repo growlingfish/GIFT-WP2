@@ -120,7 +120,9 @@ export class OpenMyGiftPage {
       this.gift.payloads[part].seen = true;
       this.userProvider.setUnopenedGift(this.gift.ID, this.gift).then(data => {
         if (this.allComplete()) {
-          if (this.gift.ID != 10000000) { // free gift is 10000000
+          if (this.gift.ID == 10000000) { // free gift is 10000000
+            this.navCtrl.pop();
+          } else {
             this.loading = this.loadingCtrl.create({
               content: 'Letting ' + this.gift.post_author_data.nickname + ' know that you have unwrapped this gift ...',
               duration: 10000
@@ -143,7 +145,7 @@ export class OpenMyGiftPage {
               this.loading.dismissAll();
               this.showError();
             });
-          }
+          } 
         }
       });
     });
@@ -213,12 +215,19 @@ export class OpenMyGiftPage {
 
   partCompleteInfo (part) {
     if (!this.partComplete (part)) {
-      let alert = this.alertCtrl.create({
-        title: "This part has not been finished",
-        subTitle: "You need to find the object and open the message to finish this part",
-        buttons: ['OK']
-      });
-      alert.present();
+      if (!this.objectComplete(part)) {
+        if (this.canOpenObject(part)) {
+          this.openObject(part);
+        } else {
+          this.objectInfo(part);
+        }
+      } else if (!this.payloadComplete(part)) {
+        if (this.canOpenMessage(part)) {
+          this.openMessage(part);
+        } else {
+          this.messageInfo(part);
+        }
+      }
     }
   }
 
