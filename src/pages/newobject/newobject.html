@@ -29,16 +29,22 @@
   </ion-grid>
 
   <ion-card>
-    <ion-card-header>Name</ion-card-header>
-    <ion-card-content>
+    <ion-card-header (click)="dropdown(0)">
+      Name
+      <ion-icon [name]="!!this.object.post_title && this.object.post_title.length > 0 ? 'checkmark-circle' : dropdowns[0] ? 'arrow-dropdown' : 'arrow-dropup'"></ion-icon>
+    </ion-card-header>
+    <ion-card-content *ngIf="dropdowns[0]">
       <p>What do you call this object?</p>
       <ion-input autocomplete="true" spellcheck="true" placeholder="Tap here to give it a name" name="title" [(ngModel)]="object.post_title" required></ion-input>
     </ion-card-content>
   </ion-card>
 
   <ion-card>
-    <ion-card-header>Location</ion-card-header>
-    <ion-card-content>
+    <ion-card-header (click)="dropdown(1)">
+      Location
+      <ion-icon [name]="!!this.object.location && !!this.object.location.post_title ? 'checkmark-circle' : dropdowns[1] ? 'arrow-dropdown' : 'arrow-dropup'"></ion-icon>
+    </ion-card-header>
+    <ion-card-content *ngIf="dropdowns[1]">
       <p>If the recipient cannot find the object, they will be able to ask the app to reveal the location. Choose the most appropriate location from the list.</p>
       <ion-item>
         <ion-label>Tap here to choose</ion-label>
@@ -50,8 +56,11 @@
   </ion-card>
 
   <ion-card>
-    <ion-card-header>More On The Location</ion-card-header>
-    <ion-card-content>
+    <ion-card-header (click)="dropdown(2)">
+      More On The Location
+      <ion-icon [name]="!!this.object.post_content && this.object.post_content.length > 0 ? 'checkmark-circle' : dropdowns[2] ? 'arrow-dropdown' : 'arrow-dropup'"></ion-icon>
+    </ion-card-header>
+    <ion-card-content *ngIf="dropdowns[2]">
       <p>This is an extra bit of information about where the object is, e.g. "next to the big red lips".</p>
       <ion-textarea autocomplete="true" spellcheck="true" placeholder="Tap here to add directions" name="directions" [(ngModel)]="object.post_content" required></ion-textarea>
     </ion-card-content>

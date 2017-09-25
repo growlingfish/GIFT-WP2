@@ -18,7 +18,7 @@
 
   <ion-list>
 
-    <ion-item (click)="startNew()" *ngIf="!unfinished">
+    <ion-item (click)="startNew()" *ngIf="!unfinished" text-wrap>
       <ion-icon name="add-circle" item-start color="secondary"></ion-icon>
       Make a new gift
       <button ion-button clear item-end color="secondary">Start</button>
@@ -26,7 +26,7 @@
 
     <ion-item-divider color="light" *ngIf="unfinished">Unfinished Gifts</ion-item-divider>
 
-    <ion-item (click)="startNew()" *ngIf="unfinished">
+    <ion-item (click)="startNew()" *ngIf="unfinished" text-wrap>
       <ion-icon name="add-circle" item-start color="danger"></ion-icon>
       <h2>{{unfinishedTitle}}</h2>
       <p>Tap here to complete this Gift</p>
@@ -35,7 +35,7 @@
 
     <ion-item-divider color="light" *ngIf="!!gifts && gifts.length > 0">Already Made Gifts</ion-item-divider>
 
-    <ion-item *ngFor="let gift of gifts" (click)="review(gift)">
+    <ion-item *ngFor="let gift of gifts" (click)="review(gift)" text-wrap>
       <ion-icon name="arrow-dropright-circle" item-start></ion-icon>
       <h2>A Gift for {{ gift.recipient.nickname }}</h2>
       <p>Sent at {{ gift.post_date }}</p>

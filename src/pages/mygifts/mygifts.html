@@ -19,7 +19,7 @@
   <ion-list>
     <ion-item-divider color="light" *ngIf="giftsUnopened().length > 0">Wrapped Gifts</ion-item-divider>
 
-    <ion-item *ngFor="let gift of giftsUnopened()" (click)="open(gift)">
+    <ion-item *ngFor="let gift of giftsUnopened()" (click)="open(gift)" text-wrap>
       <ion-icon name="bowtie" item-start color="secondary"></ion-icon>
       <h2>Gift from {{ gift.post_author_data.nickname }}</h2>
       <p>Received at {{ gift.post_date }}</p>
@@ -28,7 +28,7 @@
 
     <ion-item-divider color="light" *ngIf="giftsOpened().length > 0">Unwrapped Gifts</ion-item-divider>
 
-    <ion-item *ngFor="let gift of giftsOpened()" (click)="review(gift)">
+    <ion-item *ngFor="let gift of giftsOpened()" (click)="review(gift)" text-wrap>
       <ion-icon name="arrow-dropright-circle" item-start></ion-icon>
       <h2>Gift from {{ gift.post_author_data.nickname }}</h2>
       <p>Received at {{ gift.post_date }}</p>

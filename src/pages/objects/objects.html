@@ -28,7 +28,7 @@
     <ion-item-divider color="light">Existing objects</ion-item-divider>
 
     <ng-container *ngFor="let object of objects">
-      <ion-item *ngIf="object.ID !== selected">
+      <ion-item *ngIf="object.ID !== selected" text-wrap>
         <ion-avatar item-start (click)="viewExisting(object)">
           <img [src]="object.post_image">
         </ion-avatar>

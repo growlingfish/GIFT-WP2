@@ -33,6 +33,11 @@ export class NewObjectPage {
     title: 'Where is the object?',
     subTitle: 'Choose the most suitable location from this list'
   };
+  dropdowns = [
+    false,
+    false,
+    false
+  ];
 
   constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams, private globalVar: GlobalVarProvider, private userProvider: UserProvider, private alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, private camera: Camera, private filePath: FilePath, private file: File, public toastCtrl: ToastController, private transfer: FileTransfer, public loadingCtrl: LoadingController, private imageResizer: ImageResizer) {
     this.part = navParams.get('part');
@@ -298,4 +303,7 @@ export class NewObjectPage {
     alert.present();
   }
 
+  dropdown (card) {
+    this.dropdowns[card] = !this.dropdowns[card];
+  }
 }
