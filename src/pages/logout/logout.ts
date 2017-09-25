@@ -13,7 +13,7 @@ import { UserProvider } from '../../providers/user/user';
 })
 export class LogoutPage {
 
-  unfinished: boolean;
+  unfinished: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, private app: App) {
     this.unfinished = false;
