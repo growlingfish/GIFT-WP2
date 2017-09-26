@@ -4,6 +4,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
+
 import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
@@ -11,6 +12,10 @@ import { FilePath } from '@ionic-native/file-path';
 import { Shake } from '@ionic-native/shake';
 import { ImageResizer } from '@ionic-native/image-resizer';
 import { VideoPlayer } from '@ionic-native/video-player';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { FCM } from '@ionic-native/fcm';
+import { NativeAudio } from '@ionic-native/native-audio';
 
 import { IntroPage } from '../pages/intro/intro';
 import { LoginPage } from '../pages/login/login';
@@ -39,11 +44,8 @@ import { OpenObjectPage } from '../pages/openobject/openobject';
 import { GiftcardPage } from '../pages/giftcard/giftcard';
 import { RespondPage } from '../pages/respond/respond';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 import { UserProvider } from '../providers/user/user';
 import { GlobalVarProvider } from '../providers/global-var/global-var';
-import { FCM } from '@ionic-native/fcm';
 
 @NgModule({
   declarations: [
@@ -124,7 +126,8 @@ import { FCM } from '@ionic-native/fcm';
     FilePath,
     Shake,
     ImageResizer,
-    VideoPlayer
+    VideoPlayer,
+    NativeAudio
   ]
 })
 export class AppModule {}

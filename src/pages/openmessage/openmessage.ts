@@ -3,6 +3,8 @@ import { NavController, NavParams, ViewController, Platform } from 'ionic-angula
 
 import { Shake } from '@ionic-native/shake';
 import { VideoPlayer } from '@ionic-native/video-player';
+import { NativeAudio } from '@ionic-native/native-audio';
+import { File } from '@ionic-native/file';
 
 @Component({
   selector: 'page-openmessage',
@@ -15,7 +17,7 @@ export class OpenMessagePage {
   private watch;
   private video: string;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private platform: Platform, private shake: Shake, private zone: NgZone, private videoPlayer: VideoPlayer) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private platform: Platform, private shake: Shake, private zone: NgZone, private videoPlayer: VideoPlayer, private nativeAudio: NativeAudio, private file: File) {
     this.message = navParams.get('message');
     this.revealed = false;
   }
@@ -44,15 +46,18 @@ export class OpenMessagePage {
   }
 
   ionViewDidEnter () {
-    this.video = 'file:///android_asset/www/assets/' + this.videos[Math.floor(Math.random() * this.videos.length)];
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
         if (this.platform.is('android')) {
+          this.video = 'file:///android_asset/www/assets/' + this.videos[Math.floor(Math.random() * this.videos.length)];
           this.playVideo();
         }
         this.watch = this.shake.startWatch().subscribe(() => {
           this.zone.run(() => {
             this.videoPlayer.close();
+            this.nativeAudio.preloadSimple('success', /*this.file.applicationDirectory + 'www/*/'assets/ting.mp3').then(() => {
+              this.nativeAudio.play('success');
+            });
             this.revealed = true;
           });
         });
