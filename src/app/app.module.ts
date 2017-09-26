@@ -10,6 +10,7 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Shake } from '@ionic-native/shake';
 import { ImageResizer } from '@ionic-native/image-resizer';
+import { VideoPlayer } from '@ionic-native/video-player';
 
 import { IntroPage } from '../pages/intro/intro';
 import { LoginPage } from '../pages/login/login';
@@ -122,7 +123,8 @@ import { FCM } from '@ionic-native/fcm';
     FileTransfer,
     FilePath,
     Shake,
-    ImageResizer
+    ImageResizer,
+    VideoPlayer
   ]
 })
 export class AppModule {}
