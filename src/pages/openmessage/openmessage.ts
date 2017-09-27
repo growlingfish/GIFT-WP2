@@ -4,7 +4,6 @@ import { NavController, NavParams, ViewController, Platform } from 'ionic-angula
 import { Shake } from '@ionic-native/shake';
 import { VideoPlayer } from '@ionic-native/video-player';
 import { NativeAudio } from '@ionic-native/native-audio';
-import { File } from '@ionic-native/file';
 
 @Component({
   selector: 'page-openmessage',
@@ -17,9 +16,17 @@ export class OpenMessagePage {
   private watch;
   private video: string;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private platform: Platform, private shake: Shake, private zone: NgZone, private videoPlayer: VideoPlayer, private nativeAudio: NativeAudio, private file: File) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private platform: Platform, private shake: Shake, private zone: NgZone, private videoPlayer: VideoPlayer, private nativeAudio: NativeAudio) {
     this.message = navParams.get('message');
     this.revealed = false;
+
+    this.platform.ready().then(() => {
+      if (this.platform.is('cordova')) {
+        this.zone.run(() => {
+          this.nativeAudio.preloadSimple('success', 'assets/ting.mp3');
+        });
+      }
+    });
   }
 
   private videos = [
@@ -55,9 +62,7 @@ export class OpenMessagePage {
         this.watch = this.shake.startWatch().subscribe(() => {
           this.zone.run(() => {
             this.videoPlayer.close();
-            this.nativeAudio.preloadSimple('success', /*this.file.applicationDirectory + 'www/*/'assets/ting.mp3').then(() => {
-              this.nativeAudio.play('success');
-            });
+            this.nativeAudio.play('success');
             this.revealed = true;
           });
         });

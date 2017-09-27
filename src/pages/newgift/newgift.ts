@@ -262,9 +262,9 @@ export class NewGiftPage {
 
   giftcardTitle (): string {
     if (!!this.gift.giftcards && !!this.gift.giftcards[0] && !!this.gift.giftcards[0].post_content) {
-      return "Tap to change the giftcard";
+      return "Tap to change the Giftcard";
     } else {
-      return "How would you introduce the Gift?";
+      return "Write them a Giftcard";
     }
   }
 
@@ -272,7 +272,7 @@ export class NewGiftPage {
     if (!!this.gift.giftcards && !!this.gift.giftcards[0] && !!this.gift.giftcards[0].post_content) {
       return this.gift.giftcards[0].post_content;
     } else {
-      return "Tap to write them a giftcard";
+      return "Tap to introduce your Gift to them";
     }
   }
 

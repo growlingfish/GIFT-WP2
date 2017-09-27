@@ -101,7 +101,12 @@ export class TabsPage {
             "post_content": "This jug can be found in Mr Willet's Popular Pottery gallery.",
             "post_title": "Jug c1850",
             "post_image": "https://gifting.digital/app/uploads/2017/07/punch-1024x768.jpg",
-            "location": false
+            "location": [
+              {
+                ID: 846,
+                post_title: "Mr Willet's Popular Pottery gallery by the window with a teapot on the blind"
+              }
+            ]
           }
         },
         {
@@ -115,7 +120,7 @@ export class TabsPage {
             "location": [
               {
                 ID: 846,
-                post_title: "Ancient Egypt gallery"
+                post_title: "the Ancient Egypt Room, to the right of the door as you go in"
               }
             ]
           }
@@ -131,7 +136,7 @@ export class TabsPage {
             "location": [
               {
                 ID: 934,
-                post_title: "20th Century Art &amp; Design Gallery"
+                post_title: "the 20th Century Art and Design gallery, underneath the large painting of 3 nudes"
               }
             ]
           }
