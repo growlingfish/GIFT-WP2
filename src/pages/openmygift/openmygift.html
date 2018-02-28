@@ -27,13 +27,12 @@
   </ion-grid>
 
   <ion-grid class="giftcard">
-    <ion-row>
+    <ion-row *ngIf="!!this.gift.giftcards && !!this.gift.giftcards[0] && !!this.gift.giftcards[0].post_content">
       <ion-col col-3 class="giftcard-icon">
         <ion-icon name="create"></ion-icon>
       </ion-col>
       <ion-col col-9>
-        <h2>{{gift.giftcards[0].post_title}}</h2>
-        <p [innerHTML]="gift.giftcards[0].post_content"></p>
+        <p [innerHTML]="this.gift.giftcards[0].post_content"></p>
       </ion-col>
     </ion-row>
   </ion-grid>
