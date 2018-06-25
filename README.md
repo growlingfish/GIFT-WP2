@@ -1,26 +1,7 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+# GIFT Exchange App (legacy)
 
-## How to use this template
+To help museums (and developers who work for museums) to make use of the [GIFT Platform](https://toolkit.gifting.digital/gift-platform/), we provide the [GIFT Toolbox](https://toolkit.gifting.digital/tools/). The tools in the GIFT Toolbox are split according to the different stages of developing a hybrid gifting experience.
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+This particular app is a previous version of the [Exchange App](https://github.com/growlingfish/GIFT-exchange). The GIFT Exchange app is a mobile app built on the Ionic Framework, suitable for use on Android devices. The latest version allows users to create, send and receive [hybrid gifts](https://toolkit.gifting.digital/what-are-hybrid-gifts/) via the public instance of the GIFT Platform maintained by the GIFT project. To use the up-to-date version please search for "Gift Exchange tool" on the Google Play store and download the app to your device.
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
-
-### With the Ionic CLI:
-
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
-
-```bash
-$ sudo npm install -g ionic cordova
-$ ionic start myTabs tabs
-```
-
-Then, to run it, cd into `myTabs` and run:
-
-```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
-```
-
-Substitute ios for android if not on a Mac.
-
+**You are free to browse the source for this legacy version of the app, but _please do not expect it to interact correctly with the GIFT Platform_.**
